@@ -424,3 +424,103 @@ input[type="email"] {
     font-size: 1.75rem;
   }
 }
+
+/* HIGH-IMPACT STITCH PRELOADER */
+#stitch-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+}
+
+#stitch-preloader.loaded {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stitch-canvas-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.stitch-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Thread line style */
+.thread-line {
+  fill: none;
+  stroke: #000000;
+  stroke-width: 3;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawStitch 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.guide-line {
+  fill: none;
+  stroke: #e0e0e0;
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+}
+
+/* Needle animation path tracking */
+#needle-group {
+  offset-path: path("M 50 100 Q 200 40 400 100 T 750 100");
+  animation: moveNeedlePath 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Letter stitching revelation */
+.stitched-brand {
+  display: flex;
+  justify-content: center;
+  margin-top: -60px;
+}
+
+.stitch-letter {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: #000000;
+  opacity: 0;
+  transform: translateY(15px) scale(0.8);
+  animation: stitchLetterIn 0.15s ease forwards;
+  animation-delay: calc(var(--i) * 0.11s + 0.2s);
+  text-transform: uppercase;
+}
+
+/* ANIMATION KEYFRAMES */
+@keyframes drawStitch {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes moveNeedlePath {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes stitchLetterIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
