@@ -9,45 +9,23 @@
 </head>
 <body>
 
-  <!-- INTRO STITCH ANIMATION OVERLAY -->
+  <!-- RELIABLE STITCH PRELOADER -->
 <div id="stitch-preloader">
-  <div class="stitch-canvas-wrapper">
-    <svg class="stitch-svg" viewBox="0 0 800 200">
-      <!-- DOTTED GUIDE PATH -->
-      <path id="guide-path" class="guide-line" d="M 50 100 Q 200 40 400 100 T 750 100" />
-      
-      <!-- STITCHED THREAD LINE -->
-      <path id="thread-path" class="thread-line" d="M 50 100 Q 200 40 400 100 T 750 100" />
-      
-      <!-- MOVING NEEDLE & THREAD TAIL -->
-      <g id="needle-group">
-        <!-- Trail thread coming out of needle eye -->
-        <path d="M -25 -5 Q -10 -15 0 0" fill="none" stroke="#000" stroke-width="1.5" />
-        <!-- Shiny Metallic Needle -->
-        <path d="M 0 0 L 35 -3 L 40 0 L 35 3 Z" fill="#000000" />
-        <circle cx="5" cy="0" r="1.5" fill="#ffffff" />
-      </g>
-    </svg>
-
-    <!-- STITCHING TEXT EFFECT -->
-    <div class="stitched-brand">
-      <span class="stitch-letter" style="--i:1">W</span>
-      <span class="stitch-letter" style="--i:2">R</span>
-      <span class="stitch-letter" style="--i:3">I</span>
-      <span class="stitch-letter" style="--i:4">G</span>
-      <span class="stitch-letter" style="--i:5">H</span>
-      <span class="stitch-letter" style="--i:6">T</span>
-      <span class="stitch-letter" style="--i:7">'</span>
-      <span class="stitch-letter" style="--i:8">S</span>
-      <span class="stitch-letter" style="--i:9">&nbsp;</span>
-      <span class="stitch-letter" style="--i:10">D</span>
-      <span class="stitch-letter" style="--i:11">I</span>
-      <span class="stitch-letter" style="--i:12">G</span>
-      <span class="stitch-letter" style="--i:13">I</span>
-      <span class="stitch-letter" style="--i:14">T</span>
+  <div class="stitch-box">
+    <!-- Moving Needle Graphic -->
+    <div class="needle-wrapper">
+      <div class="needle-body"></div>
+      <div class="thread-tail"></div>
     </div>
+    
+    <!-- Stitched Line -->
+    <div class="stitch-line"></div>
+
+    <!-- Company Title -->
+    <h1 class="stitch-title">WRIGHT'S DIGIT</h1>
   </div>
 </div>
+  
   <!-- HEADER / NAVBAR -->
   <header class="header">
     <div class="nav-container">
