@@ -177,10 +177,10 @@ function dismissStitchIntro() {
 
 // Trigger automatically on page load
 if (document.readyState === "complete") {
-  setTimeout(dismissStitchIntro, 2200);
+  setTimeout(dismissStitchIntro, 1000);
 } else {
   window.addEventListener("load", () => {
-    setTimeout(dismissStitchIntro, 2200);
+    setTimeout(dismissStitchIntro, 1000);
   });
 }
 
