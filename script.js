@@ -287,3 +287,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Renders all Feather icons including the mail icon
+  if (window.feather) {
+    feather.replace();
+  }
+});
