@@ -460,7 +460,7 @@ input[type="email"] {
   left: 0;
   display: flex;
   align-items: center;
-  animation: moveNeedleAcross 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: moveNeedleAcross 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 2;
 }
 
@@ -497,7 +497,7 @@ input[type="email"] {
   background-color: #000000;
   border-bottom: 2px dashed #ffffff; /* Creates stitched look */
   margin: 10px 0;
-  animation: drawStitchLine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: drawStitchLine 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* TITLE ANIMATION */
@@ -508,7 +508,7 @@ input[type="email"] {
   color: #000000;
   opacity: 0;
   transform: translateY(10px);
-  animation: revealTitle 0.5s ease 1.2s forwards;
+  animation: revealTitle 0.3s ease 0.5s forwards;
 }
 
 /* KEYFRAMES */
