@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WRIGHT'S DIGIT | Embroidery services</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Defer loading of icon script so the browser never hangs -->
+</head>
+<body>
+
+  <!-- HEADER / NAVBAR -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <!-- REPLACE 'logo.png' WITH YOUR ACTUAL LOGO IMAGE PATH -->
+        <img src="logo.png" alt="WRIGHT'S DIGIT Logo" class="brand-logo" id="logo-img">
+        <span class="brand-name">WRIGHT'S DIGIT</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#about">About Us</a>
+        <a href="#help">Help</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container">
+        <h1>Embroidery that shines</h1>
+        <p>We offer quality.</p>
+      </div>
+    </section>
+
+    <!-- PRODUCTS GRID SECTION -->
+    <section id="products" class="products-section">
+      <div class="container">
+        <h2 class="section-title">OUR PRODUCTS</h2>
+        <div class="product-grid" id="product-grid">
+          <!-- Products will be injected by JS or added manually below -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="about-section">
+      <div class="container">
+        <h2 class="section-title">ABOUT WRIGHT'S DIGIT</h2>
+        <p class="about-text">
+          At WRIGHT'S DIGIT, we eliminate distraction to deliver supreme digital execution. We specialize in providing custom embroidery and vector printing done on your provided details crafted with profession for forward-thinking enterprises.
+        </p>
+      </div>
+    </section>
+
+    <!-- HELP / FAQ SECTION -->
+    <section id="help" class="help-section">
+      <div class="container">
+        <h2 class="section-title">HELP & FREQUENTLY ASKED QUESTIONS</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">How are orders processed? <i data-feather="chevron-down"></i></button>
+            <div class="faq-answer">
+              <p>Once you place an order with your Gmail address, our system instantly triggers a purchase confirmation and sends product access directly to your inbox.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">What payment methods do you accept? <i data-feather="chevron-down"></i></button>
+            <div class="faq-answer">
+              <p>We process all major credit/debit cards, direct bank wire transfers, and verified digital wallets after order receipt.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Need technical support? <i data-feather="chevron-down"></i></button>
+            <div class="faq-answer">
+              <p>Reach out through our direct contact email below and our response team will assist within 12 business hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <h2 class="section-title">CONTACT US</h2>
+        <div class="contact-box">
+          <p>Have questions or need custom solutions?</p>
+          <!-- YOUR PROFESSIONAL GMAIL DISPLAYED HERE -->
+          <a href="mailto:wightsdigit@gmail.com" class="email-link">wrightsdigit@gmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 WRIGHT'S DIGIT. ALL RIGHTS RESERVED.</p>
+    </div>
+  </footer>
+
+  <!-- REVIEWS MODAL -->
+  <div id="reviews-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-reviews">&times;</span>
+      <h3 id="reviews-title">PRODUCT REVIEWS</h3>
+      <div id="reviews-list" class="reviews-list"></div>
+    </div>
+  </div>
+
+  <!-- ORDER MODAL -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-order">&times;</span>
+      <h3>PLACE YOUR ORDER</h3>
+      <p id="order-product-name" class="modal-subtitle"></p>
+      <form id="order-form">
+        <input type="hidden" id="selected-product-id">
+        <label for="user-email">ENTER YOUR GMAIL ADDRESS</label>
+        <!-- REPLACE THE MAILTO ADDRESS IN APP.JS OR INLINE -->
+        <input type="email" id="user-email" placeholder="example@gmail.com" required>
+        <button type="submit" class="btn btn-primary full-width">SUBMIT ORDER</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
