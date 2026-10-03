@@ -113,6 +113,35 @@
     </section>
   </main>
 
+  <!-- WEBSITE & PRODUCT RATING SECTION -->
+<section id="feedback" class="rating-section">
+  <div class="container">
+    <div class="rating-card">
+      <span class="badge">YOUR FEEDBACK</span>
+      <h2>RATE YOUR EXPERIENCE WITH WRIGHT'S DIGIT</h2>
+      <p>How would you rate our products and overall website experience?</p>
+
+      <!-- Animated Star Picker -->
+      <div class="star-rating-box" id="site-star-picker">
+        <span class="star-btn" data-value="1">&#9733;</span>
+        <span class="star-btn" data-value="2">&#9733;</span>
+        <span class="star-btn" data-value="3">&#9733;</span>
+        <span class="star-btn" data-value="4">&#9733;</span>
+        <span class="star-btn" data-value="5">&#9733;</span>
+      </div>
+
+      <div class="rating-text-feedback" id="rating-feedback-label">SELECT A RATING</div>
+
+      <!-- Optional Comment & Submit -->
+      <form id="website-rating-form" class="rating-form">
+        <input type="hidden" id="selected-rating-value" name="rating_score" value="0">
+        <textarea id="rating-comment" name="feedback_comment" placeholder="Tell us what you liked or how we can improve..." rows="3"></textarea>
+        <button type="submit" id="submit-rating-btn" class="btn btn-primary">SUBMIT RATING</button>
+      </form>
+    </div>
+  </div>
+</section>
+  
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
