@@ -407,3 +407,20 @@ input[type="email"] {
   font-size: 0.9rem;
   color: #333;
 }
+
+/* MOBILE OPTIMIZATIONS */
+@media (max-width: 600px) {
+  .nav-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-links {
+    gap: 15px;
+    font-size: 0.8rem;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+}
