@@ -166,3 +166,14 @@ window.onclick = function(event) {
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
 });
+
+// INTRO PRELOADER AUTOMATIC DISMISSAL
+window.addEventListener("DOMContentLoaded", () => {
+  // Dismiss intro overlay after animation completes (2.5 seconds)
+  setTimeout(() => {
+    const preloader = document.getElementById("stitch-preloader");
+    if (preloader) {
+      preloader.classList.add("loaded");
+    }
+  }, 2500);
+});
