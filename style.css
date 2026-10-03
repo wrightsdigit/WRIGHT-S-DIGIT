@@ -425,102 +425,106 @@ input[type="email"] {
   }
 }
 
-/* HIGH-IMPACT STITCH PRELOADER */
+/* STITCH PRELOADER OVERLAY */
 #stitch-preloader {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: #ffffff;
-  z-index: 9999;
+  z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
-#stitch-preloader.loaded {
-  transform: translateY(-100%);
+#stitch-preloader.fade-out {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 
-.stitch-canvas-wrapper {
+.stitch-box {
   position: relative;
-  width: 90%;
-  max-width: 800px;
   text-align: center;
+  width: 320px;
 }
 
-.stitch-svg {
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-/* Thread line style */
-.thread-line {
-  fill: none;
-  stroke: #000000;
-  stroke-width: 3;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: drawStitch 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.guide-line {
-  fill: none;
-  stroke: #e0e0e0;
-  stroke-width: 1.5;
-  stroke-dasharray: 6 6;
-}
-
-/* Needle animation path tracking */
-#needle-group {
-  offset-path: path("M 50 100 Q 200 40 400 100 T 750 100");
-  animation: moveNeedlePath 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Letter stitching revelation */
-.stitched-brand {
+/* NEEDLE ANIMATION */
+.needle-wrapper {
+  position: absolute;
+  top: -15px;
+  left: 0;
   display: flex;
-  justify-content: center;
-  margin-top: -60px;
+  align-items: center;
+  animation: moveNeedleAcross 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 2;
 }
 
-.stitch-letter {
-  font-size: 2.2rem;
+.needle-body {
+  width: 28px;
+  height: 3px;
+  background-color: #000000;
+  border-radius: 2px 0 0 2px;
+  position: relative;
+}
+
+/* Needle Eye */
+.needle-body::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  top: 0.8px;
+  width: 2px;
+  height: 1.5px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+.thread-tail {
+  width: 15px;
+  height: 1.5px;
+  background-color: #888888;
+}
+
+/* STITCH LINE ANIMATION */
+.stitch-line {
+  height: 2px;
+  width: 0%;
+  background-color: #000000;
+  border-bottom: 2px dashed #ffffff; /* Creates stitched look */
+  margin: 10px 0;
+  animation: drawStitchLine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* TITLE ANIMATION */
+.stitch-title {
+  font-size: 1.6rem;
   font-weight: 900;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
   color: #000000;
   opacity: 0;
-  transform: translateY(15px) scale(0.8);
-  animation: stitchLetterIn 0.15s ease forwards;
-  animation-delay: calc(var(--i) * 0.11s + 0.2s);
-  text-transform: uppercase;
+  transform: translateY(10px);
+  animation: revealTitle 0.5s ease 1.2s forwards;
 }
 
-/* ANIMATION KEYFRAMES */
-@keyframes drawStitch {
-  to {
-    stroke-dashoffset: 0;
-  }
+/* KEYFRAMES */
+@keyframes moveNeedleAcross {
+  0% { left: 0%; }
+  100% { left: 100%; }
 }
 
-@keyframes moveNeedlePath {
-  0% {
-    offset-distance: 0%;
-  }
-  100% {
-    offset-distance: 100%;
-  }
+@keyframes drawStitchLine {
+  0% { width: 0%; }
+  100% { width: 100%; }
 }
 
-@keyframes stitchLetterIn {
+@keyframes revealTitle {
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
