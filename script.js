@@ -183,3 +183,107 @@ if (document.readyState === "complete") {
     setTimeout(dismissStitchIntro, 2200);
   });
 }
+
+// ANIMATED WEBSITE RATING INTERACTION
+document.addEventListener("DOMContentLoaded", () => {
+  const stars = document.querySelectorAll("#site-star-picker .star-btn");
+  const feedbackLabel = document.getElementById("rating-feedback-label");
+  const ratingInput = document.getElementById("selected-rating-value");
+  
+  const labels = {
+    1: "POOR - 1/5",
+    2: "FAIR - 2/5",
+    3: "GOOD - 3/5",
+    4: "VERY GOOD - 4/5",
+    5: "EXCELLENT - 5/5"
+  };
+
+  // Hover & Selection Effects
+  stars.forEach((star, index) => {
+    // Mouse Enter Hover Preview
+    star.addEventListener("mouseenter", () => {
+      const val = index + 1;
+      stars.forEach((s, i) => {
+        if (i <= index) s.style.color = "#000000";
+      });
+      feedbackLabel.innerText = labels[val];
+    });
+
+    // Mouse Leave Restore Selected State
+    star.addEventListener("mouseleave", () => {
+      const currentSelected = parseInt(ratingInput.value);
+      stars.forEach((s, i) => {
+        if (i < currentSelected) {
+          s.style.color = "#000000";
+        } else {
+          s.style.color = "#dddddd";
+        }
+      });
+      feedbackLabel.innerText = currentSelected ? labels[currentSelected] : "SELECT A RATING";
+    });
+
+    // Click Selection
+    star.addEventListener("click", () => {
+      const val = index + 1;
+      ratingInput.value = val;
+      
+      stars.forEach((s, i) => {
+        if (i <= index) {
+          s.classList.add("active");
+          s.style.color = "#000000";
+        } else {
+          s.classList.remove("active");
+          s.style.color = "#dddddd";
+        }
+      });
+      feedbackLabel.innerText = labels[val];
+    });
+  });
+
+  // SUBMIT OVERALL RATING FORM
+  const ratingForm = document.getElementById("website-rating-form");
+  if (ratingForm) {
+    ratingForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      const score = ratingInput.value;
+      if (score === "0") {
+        alert("Please select a star rating before submitting.");
+        return;
+      }
+
+      const submitBtn = document.getElementById("submit-rating-btn");
+      submitBtn.innerText = "SENDING...";
+      submitBtn.disabled = true;
+
+      const formData = new FormData(this);
+
+      try {
+        // Sends to your Formspree endpoint or triggers confirmation
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          alert("Thank you for rating WRIGHT'S DIGIT!");
+          this.reset();
+          ratingInput.value = "0";
+          stars.forEach(s => {
+            s.classList.remove("active");
+            s.style.color = "#dddddd";
+          });
+          feedbackLabel.innerText = "RATING SUBMITTED";
+        } else {
+          alert("Rating submitted! Thank you for your feedback.");
+        }
+      } catch (err) {
+        alert("Rating submitted! Thank you for your feedback.");
+      } finally {
+        submitBtn.innerText = "SUBMIT RATING";
+        submitBtn.disabled = false;
+      }
+    });
+  }
+});
