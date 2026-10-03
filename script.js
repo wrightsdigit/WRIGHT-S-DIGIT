@@ -167,13 +167,19 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
 });
 
-// INTRO PRELOADER AUTOMATIC DISMISSAL
-window.addEventListener("DOMContentLoaded", () => {
-  // Dismiss intro overlay after animation completes (2.5 seconds)
-  setTimeout(() => {
-    const preloader = document.getElementById("stitch-preloader");
-    if (preloader) {
-      preloader.classList.add("loaded");
-    }
-  }, 2500);
-});
+// HIDE PRELOADER AFTER 2.2 SECONDS
+function dismissStitchIntro() {
+  const preloader = document.getElementById("stitch-preloader");
+  if (preloader) {
+    preloader.classList.add("fade-out");
+  }
+}
+
+// Trigger automatically on page load
+if (document.readyState === "complete") {
+  setTimeout(dismissStitchIntro, 2200);
+} else {
+  window.addEventListener("load", () => {
+    setTimeout(dismissStitchIntro, 2200);
+  });
+}
