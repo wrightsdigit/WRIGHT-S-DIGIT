@@ -35,37 +35,6 @@ const products = [
     reviews: [
      
     ]
-  },
-   {
-    id: "p4",
-    name: "custom ambroided monograms",
-    price: "Free for first order",
-    image: "product4.png", // Replace with your image file/URL
-    description: "your order will be made on your provided details.",
-    likes: 210,
-    reviews: [
-     
-    ]
-  }, {
-    id: "p5",
-    name: "custom ambroided monograms",
-    price: "Free for first order",
-    image: "product5.png", // Replace with your image file/URL
-    description: "your order will be made on your provided details.",
-    likes: 210,
-    reviews: [
-     
-    ]
-  }, {
-    id: "p6",
-    name: "custom ambroided monograms",
-    price: "Free for first order",
-    image: "product6.png", // Replace with your image file/URL
-    description: "your order will be made on your provided details.",
-    likes: 210,
-    reviews: [
-     
-    ]
   }
 ];
 
