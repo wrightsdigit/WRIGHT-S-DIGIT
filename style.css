@@ -528,3 +528,85 @@ input[type="email"] {
     transform: translateY(0);
   }
 }
+
+/* STANDALONE WEBSITE RATING SECTION */
+.rating-section {
+  padding: 80px 0;
+  border-bottom: 1px solid #000000;
+  background-color: #fafafa;
+}
+
+.rating-card {
+  border: 1px solid #000000;
+  background: #ffffff;
+  padding: 40px;
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.rating-card h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin: 15px 0 8px;
+}
+
+.rating-card p {
+  font-size: 0.95rem;
+  color: #555555;
+  margin-bottom: 25px;
+}
+
+/* ANIMATED STAR RATING BOX */
+.star-rating-box {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.star-btn {
+  font-size: 2.5rem;
+  color: #dddddd;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease;
+  user-select: none;
+}
+
+/* Hover & Active Scale Effects */
+.star-btn:hover {
+  transform: scale(1.35) rotate(-5deg);
+}
+
+.star-btn.active {
+  color: #000000;
+  transform: scale(1.15);
+}
+
+.rating-text-feedback {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+  height: 20px;
+  color: #333333;
+}
+
+/* RATING FORM INPUTS */
+.rating-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.rating-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #000000;
+  font-size: 0.95rem;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+}
