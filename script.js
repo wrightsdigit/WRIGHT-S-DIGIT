@@ -1,4 +1,4 @@
-// Sample Product Data
+// Sample Product Data with Local Image Paths
 const products = [
   {
     id: 1,
@@ -7,8 +7,8 @@ const products = [
     price: "$18.00",
     description: "High-density 100% embroidered patch with iron-on backing and reinforced merrowed border.",
     images: [
-      "https://picsum.photos/id/1062/400/300",
-      "https://picsum.photos/id/1025/400/300"
+      "product1.png",
+      "product1-alt.png"
     ],
     specs: ["Stitch Count: 14,200", "Dimensions: 3.5\" x 3.5\"", "Thread: Madeira Rayon", "Backing: Heat-seal Iron-On"]
   },
@@ -19,8 +19,8 @@ const products = [
     price: "$25.00",
     description: "Manual digitizing service tailored for left-chest or hat placements with zero puckering guaranteed.",
     images: [
-      "https://picsum.photos/id/1069/400/300",
-      "https://picsum.photos/id/1060/400/300"
+      "product2.png",
+      "product2-alt.png"
     ],
     specs: ["Formats: DST, PES, EXP, EMB", "Turnaround: 24 Hours", "Free Revisions: Unlimited minor tweaks"]
   },
@@ -31,8 +31,8 @@ const products = [
     price: "$65.00",
     description: "Heavyweight 400GSM cotton hoodie featuring direct-to-garment chest and sleeve embroidery.",
     images: [
-      "https://picsum.photos/id/1005/400/300",
-      "https://picsum.photos/id/1011/400/300"
+      "product3.png",
+      "product3-alt.png"
     ],
     specs: ["Stitch Count: 28,500", "Material: 100% Organic Cotton", "Fit: Oversized Streetwear"]
   }
@@ -53,16 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Digitizing Modal
   const digitizingModal = document.getElementById("digitizing-modal");
-  const openDigitizingBtns = [
-    document.getElementById("open-digitizing-btn"),
-    document.getElementById("footer-digitizing-btn")
-  ];
+  const openDigitizingBtn = document.getElementById("open-digitizing-btn");
   const closeDigitizingBtn = document.getElementById("close-digitizing-btn");
 
-  openDigitizingBtns.forEach(btn => {
-    if (btn) btn.addEventListener("click", () => openModal(digitizingModal));
-  });
-  if (closeDigitizingBtn) closeDigitizingBtn.addEventListener("click", () => closeModal(digitizingModal));
+  if (openDigitizingBtn) {
+    openDigitizingBtn.addEventListener("click", () => openModal(digitizingModal));
+  }
+  if (closeDigitizingBtn) {
+    closeDigitizingBtn.addEventListener("click", () => closeModal(digitizingModal));
+  }
 
   // About Modal
   const aboutModal = document.getElementById("about-modal");
@@ -75,7 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
       openModal(aboutModal);
     });
   }
-  if (closeAboutBtn) closeAboutBtn.addEventListener("click", () => closeModal(aboutModal));
+  if (closeAboutBtn) {
+    closeAboutBtn.addEventListener("click", () => closeModal(aboutModal));
+  }
 
   // Close modals when clicking overlay background
   window.addEventListener("click", (e) => {
@@ -84,18 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 3. DIGITIZING FORM SUBMISSION
-  const digitizingForm = document.getElementById("digitizing-form");
-  if (digitizingForm) {
-    digitizingForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Thank you! Your digitizing quote request has been received. We will respond within 12 hours.");
-      closeModal(digitizingModal);
-      digitizingForm.reset();
-    });
-  }
-
-  // 4. PRODUCT GRID POPULATION & DETAIL MODAL (FOR PRODUCTS.HTML)
+  // 3. PRODUCT GRID POPULATION & DETAIL MODAL (FOR PRODUCTS.HTML)
   const productGrid = document.getElementById("product-grid");
   const productModal = document.getElementById("product-modal");
   const closeProductBtn = document.getElementById("close-product-btn");
@@ -116,7 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (closeProductBtn) closeProductBtn.addEventListener("click", () => closeModal(productModal));
+  if (closeProductBtn) {
+    closeProductBtn.addEventListener("click", () => closeModal(productModal));
+  }
 
   function showProductDetails(product) {
     document.getElementById("modal-title").textContent = product.title;
