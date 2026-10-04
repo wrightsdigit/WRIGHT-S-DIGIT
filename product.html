@@ -3,145 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WRIGHT'S DIGIT | Products Catalog</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/feather-icons"></script>
+  <title>Products & Work Showcase - Stitchcraft</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
-  <!-- PRODUCT PAGE NAVBAR -->
+
+  <!-- NAVBAR / HEADER -->
   <header class="products-header">
     <div class="container nav-wrapper">
-      <!-- Left: Logo and Brand Name side-by-side -->
       <a href="index.html" class="brand-group">
-        <img src="logo.png" alt="WRIGHT'S DIGIT Logo" class="nav-logo" onerror="this.style.display='none'">
-        <span class="brand-link">WRIGHT'S DIGIT</span>
+        <span class="brand-link">STITCHCRAFT</span>
       </a>
     </div>
   </header>
 
-  <div class="order-trigger-container" style="text-align: center; margin: 40px 0; position: relative; z-index: 1000;">
-  <button type="button" 
-          onclick="document.getElementById('embroidery-modal').style.display='flex';" 
-          class="btn btn-primary btn-large">
-    PLACE EMBROIDERY DIGITIZING ORDER
-  </button>
-</div>
-
-  <!-- PRODUCTS GRID -->
+  <!-- MAIN CATALOG SECTION -->
   <main class="section">
     <div class="container">
-      <h1 class="page-title">What We Provide</h1>
-      <div id="product-grid" class="product-grid"></div>
+      <div class="text-center">
+        <span class="badge">CATALOG & PORTFOLIO</span>
+        <h2>FEATURED EMBROIDERY WORK</h2>
+        <p class="section-desc">Click on any product to view full details and image gallery.</p>
+      </div>
+
+      <div class="product-grid" id="product-grid">
+        <!-- Products populated dynamically via JavaScript -->
+      </div>
     </div>
   </main>
 
-  <!-- MULTI-IMAGE & DETAIL POPUP MODAL -->
-  <div id="product-detail-modal" class="modal">
+  <!-- DYNAMIC PRODUCT DETAIL MODAL -->
+  <div id="product-modal" class="modal">
     <div class="modal-content product-modal-content">
-      
-      <!-- Image Gallery Carousel -->
-      <div class="gallery-container">
-        <img id="modal-main-img" src="" alt="Product Image" class="gallery-main-img">
-        <div id="modal-thumbnails" class="thumbnail-list"></div>
+      <button class="close-btn" id="close-product-btn">&times;</button>
+      <div class="product-gallery">
+        <img id="modal-main-image" src="" alt="Product Preview" class="gallery-main-img">
+        <div class="thumbnail-list" id="modal-thumbnails"></div>
       </div>
-
-      <!-- Details -->
-      <div class="product-info-panel">
-        <h2 id="modal-product-title"></h2>
-        <div class="price-row">
-          <span id="modal-product-price" class="modal-price"></span>
-          <button class="btn btn-outline" id="modal-like-btn"><i data-feather="heart"></i> <span id="modal-likes-count"></span></button>
+      <div class="product-details">
+        <span class="badge" id="modal-badge">PATCH</span>
+        <h2 id="modal-title">Product Name</h2>
+        <p class="price" id="modal-price">$0.00</p>
+        <p id="modal-description">Product description text goes here.</p>
+        <div class="specs">
+          <h4>STITCH SPECIFICATIONS:</h4>
+          <ul class="spec-list" id="modal-specs"></ul>
         </div>
-        
-        <p id="modal-product-desc"></p>
-
-        <!-- Customer Reviews List -->
-        <div class="reviews-container">
-          <h3>REVIEWS</h3>
-          <div id="modal-reviews-list"></div>
-        </div>
+        <button class="btn btn-primary full-width" style="margin-top:20px;" onclick="alert('Order inquiry submitted for this item!')">INQUIRE ABOUT THIS ITEM</button>
+      </div>
     </div>
   </div>
 
-  <!-- EMBROIDERY DIGITIZING ORDER FORM MODAL (DIRECT GMAIL) -->
-  <div id="embroidery-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeEmbroideryModal()">&times;</span>
-      <h3>PLACE EMBROIDERY DIGITIZING ORDER</h3>
-
-      <form id="embroidery-order-form">
-        <!-- Customer Info -->
-        <div class="form-group">
-          <label for="cust-name">Full Name *</label>
-          <input type="text" id="cust-name" name="Full Name" required placeholder="Enter your full name">
-        </div>
-
-        <div class="form-group">
-          <label for="cust-email">Email Address *</label>
-          <input type="email" id="cust-email" name="Email Address" required placeholder="name@example.com">
-        </div>
-
-        <div class="form-group">
-          <label for="cust-phone">Phone Number *</label>
-          <input type="tel" id="cust-phone" name="Phone Number" required placeholder="+1 123 456 7890">
-        </div>
-
-        <div class="form-group">
-          <label for="cust-company">Company Name</label>
-          <input type="text" id="cust-company" name="Company Name" placeholder="Your company or business name">
-        </div>
-
-        <!-- Dimensions -->
-        <div class="form-row" style="display: flex; gap: 15px;">
-          <div class="form-group half-width" style="flex: 1;">
-            <label for="cust-width">Width (Inches/cm) *</label>
-            <input type="text" id="cust-width" name="Design Width" required placeholder="e.g., 4 in">
-          </div>
-          <div class="form-group half-width" style="flex: 1;">
-            <label for="cust-height">Height (Inches/cm) *</label>
-            <input type="text" id="cust-height" name="Design Height" required placeholder="e.g., 3 in">
-          </div>
-        </div>
-
-        <!-- Format Radio Options -->
-        <div class="form-group">
-          <label>File Format Required *</label>
-          <div class="format-options">
-            <label><input type="radio" name="Required File Format" value="PES" required> PES</label>
-            <label><input type="radio" name="Required File Format" value="DST"> DST</label>
-            <label><input type="radio" name="Required File Format" value="EPS"> EPS</label>
-            <label><input type="radio" name="Required File Format" value="AI"> AI</label>
-            <label><input type="radio" name="Required File Format" value="CDR"> CDR</label>
-          </div>
-        </div>
-
-        <!-- Placement & Message -->
-        <div class="form-group">
-          <label for="cust-placement">Placement *</label>
-          <input type="text" id="cust-placement" name="Placement Location" required placeholder="e.g., Left Chest, Hat / Cap, Back of Jacket">
-        </div>
-
-        <div class="form-group">
-          <label for="cust-message">Order Instructions / Message</label>
-          <textarea id="cust-message" name="Special Instructions" rows="3" placeholder="Add thread color specs, garment details, or specific notes..."></textarea>
-        </div>
-
-        <!-- Instructions for Artwork Attachment -->
-        <div class="file-instruction-box" style="background: #f8f9fa; border: 1px dashed #ccc; padding: 12px; margin: 15px 0; border-radius: 6px;">
-          <p style="margin: 0; font-size: 0.88rem; color: #555; line-height: 1.4;">
-            📎 <strong>Artwork Attachment Notice:</strong> When you click the button below, your email client (Gmail, Apple Mail, etc.) will automatically open with all your details pre-filled. Please <strong>attach your artwork file</strong> directly to that draft email before hitting send!
-          </p>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" id="submit-order-btn" class="btn btn-primary submit-btn full-width">OPEN EMAIL TO ATTACH ARTWORK & SEND</button>
-
-        <!-- Live Status Message -->
-        <div id="form-status" style="margin-top: 15px; text-align: center; font-weight: bold; font-size: 0.95rem;"></div>
-      </form>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>STITCHCRAFT</h3>
+        <p>Precision embroidery digitizing & high-quality embroidered merchandise.</p>
+      </div>
+      <div class="footer-col">
+        <h4>NAVIGATION</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products Catalog</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stitchcraft Studio. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
