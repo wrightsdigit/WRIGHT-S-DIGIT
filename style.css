@@ -1,22 +1,17 @@
-/* RESET & BASE STYLES */
+/* =========================================================
+   1. CORE RESET & BASE STYLES
+   ========================================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #ffffff;
   color: #000000;
   line-height: 1.6;
-  scroll-behavior: smooth;
-}
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 20px;
 }
 
 a {
@@ -24,450 +19,106 @@ a {
   text-decoration: none;
 }
 
-/* HEADER & NAVIGATION */
-.header {
-  position: sticky;
-  top: 0;
-  background-color: #ffffff;
-  border-bottom: 1px solid #000000;
-  z-index: 100;
-}
-
-.nav-container {
+.container {
+  width: 90%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand-logo {
-  height: 100px;
-  width: auto;
-  object-fit: contain;
-  filter: grayscale(100%);
-}
-
-.brand-name {
-  font-weight: 800;
-  font-size: 1.25rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.nav-links {
-  display: flex;
-  gap: 30px;
-}
-
-.nav-links a {
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: opacity 0.2s;
-}
-
-.nav-links a:hover {
-  opacity: 0.5;
-}
-
-/* HERO SECTION */
-.hero {
-  padding: 100px 0 60px;
+.text-center {
   text-align: center;
+}
+
+.section {
+  padding: 70px 0;
   border-bottom: 1px solid #000000;
 }
 
 .badge {
   display: inline-block;
-  border: 1px solid #000000;
-  padding: 4px 12px;
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  font-weight: 900;
-  letter-spacing: 3px;
-  margin-bottom: 15px;
-}
-
-.hero p {
-  font-size: 1.1rem;
-  color: #444444;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* TITLES */
-.section-title {
-  font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: 2px;
-  margin-bottom: 40px;
-  text-transform: uppercase;
-}
-
-/* PRODUCTS GRID */
-.products-section {
-  padding: 80px 0;
-  border-bottom: 1px solid #000000;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.product-card {
+  padding: 4px 10px;
   border: 1px solid #000000;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-}
-
-.product-image-container {
-  height: 250px;
-  width: 100%;
-  border-bottom: 1px solid #000000;
-  overflow: hidden;
-  background-color: #fafafa;
-}
-
-.product-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(100%);
-  transition: filter 0.3s;
-}
-
-.product-card:hover .product-image {
-  filter: grayscale(0%);
-}
-
-.product-details {
-  padding: 20px;
-}
-
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-}
-
-.product-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.product-price {
-  font-weight: 800;
-  font-size: 1.1rem;
-}
-
-.product-description {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.product-actions {
-  display: flex;
-  gap: 10px;
   margin-bottom: 15px;
+  background: #fafafa;
 }
 
+/* =========================================================
+   2. BUTTONS & UI COMPONENTS
+   ========================================================= */
 .btn {
-  padding: 10px 16px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  display: inline-block;
+  padding: 12px 24px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
   cursor: pointer;
   border: 1px solid #000000;
+  transition: all 0.2s ease;
   background: transparent;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-outline {
-  color: #000000;
-  background: #ffffff;
-}
-
-.btn-outline:hover {
-  background: #000000;
-  color: #ffffff;
 }
 
 .btn-primary {
-  background: #000000;
+  background-color: #000000;
   color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: #333333;
+  background-color: #333333;
+}
+
+.btn-outline {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.btn-outline:hover {
+  background-color: #f0f0f0;
+}
+
+.btn-large {
+  padding: 16px 32px;
+  font-size: 1rem;
 }
 
 .full-width {
   width: 100%;
 }
 
-.like-btn.liked {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-/* ABOUT SECTION */
-.about-section {
-  padding: 80px 0;
+/* =========================================================
+   3. HERO & LANDING SECTIONS
+   ========================================================= */
+.hero-header {
+  padding: 100px 0 60px;
   border-bottom: 1px solid #000000;
 }
 
-.about-text {
-  font-size: 1.1rem;
-  max-width: 800px;
-  color: #333;
+.brand-title {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  margin-bottom: 10px;
 }
 
-/* FAQ / HELP SECTION */
-.help-section {
-  padding: 80px 0;
-  border-bottom: 1px solid #000000;
-}
-
-.faq-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.faq-item {
-  border: 1px solid #000000;
-}
-
-.faq-question {
-  width: 100%;
-  padding: 18px 20px;
-  background: none;
-  border: none;
-  text-align: left;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-transform: uppercase;
-}
-
-.faq-answer {
-  padding: 0 20px 18px;
-  display: none;
-  font-size: 0.95rem;
-  color: #444;
-}
-
-.faq-item.active .faq-answer {
-  display: block;
-}
-
-/* CONTACT SECTION & MAILBOX STYLES */
-.contact-section {
-  padding: 80px 0;
-  border-bottom: 1px solid #000000;
-}
-
-.contact-card {
-  border: 1px solid #000000;
-  padding: 40px 20px;
-  text-align: center;
-  max-width: 500px;
-  margin: 0 auto;
-  background-color: #ffffff;
-  transition: transform 0.2s ease;
-}
-
-.contact-card:hover {
-  transform: translateY(-3px);
-}
-
-.mailbox-icon-container {
-  width: 60px;
-  height: 60px;
-  border: 1px solid #000000;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  background-color: #fafafa;
-}
-
-.mailbox-icon {
-  width: 26px;
-  height: 26px;
-  color: #000000;
-}
-
-.contact-subtitle {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #555555;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.email-address {
-  display: inline-block;
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #000000;
-  border-bottom: 2px solid #000000;
-  padding-bottom: 2px;
-  transition: opacity 0.2s ease;
-}
-
-.email-address:hover {
-  opacity: 0.6;
-}
-
-/* FOOTER */
-.footer {
-  padding: 30px 0;
-  text-align: center;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-/* MODAL STYLES */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  padding: 30px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.modal-subtitle {
-  font-weight: 700;
-  margin: 10px 0 20px;
-  text-transform: uppercase;
-}
-
-/* FORM ELEMENTS */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-input[type="email"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #000000;
-  font-size: 1rem;
-  outline: none;
-}
-
-.reviews-list {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.review-card {
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-.review-author {
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-
-.review-text {
+.brand-slogan {
   font-size: 0.9rem;
-  color: #333;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #555555;
 }
 
-/* MOBILE OPTIMIZATIONS */
-@media (max-width: 600px) {
-  .nav-container {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .nav-links {
-    gap: 15px;
-    font-size: 0.8rem;
-  }
-
-  .hero h1 {
-    font-size: 1.75rem;
-  }
+.section-desc {
+  max-width: 650px;
+  margin: 15px auto 30px;
+  font-size: 1rem;
+  color: #444444;
 }
 
-/* STITCH PRELOADER OVERLAY */
+/* =========================================================
+   4. STITCH PRELOADER & AUTH MODAL
+   ========================================================= */
 #stitch-preloader {
   position: fixed;
   top: 0;
@@ -479,7 +130,6 @@ input[type="email"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
@@ -492,163 +142,205 @@ input[type="email"] {
 .stitch-box {
   position: relative;
   text-align: center;
-  width: 320px;
+  width: 280px;
 }
 
-/* NEEDLE ANIMATION */
 .needle-wrapper {
   position: absolute;
   top: -15px;
   left: 0;
-  display: flex;
-  align-items: center;
   animation: moveNeedleAcross 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  z-index: 2;
 }
 
 .needle-body {
-  width: 28px;
+  width: 25px;
   height: 3px;
-  background-color: #000000;
-  border-radius: 2px 0 0 2px;
-  position: relative;
+  background: #000;
 }
 
-/* Needle Eye */
-.needle-body::after {
-  content: '';
-  position: absolute;
-  right: 3px;
-  top: 0.8px;
-  width: 2px;
-  height: 1.5px;
-  background-color: #ffffff;
-  border-radius: 50%;
-}
-
-.thread-tail {
-  width: 15px;
-  height: 1.5px;
-  background-color: #888888;
-}
-
-/* STITCH LINE ANIMATION */
 .stitch-line {
   height: 2px;
   width: 0%;
-  background-color: #000000;
-  border-bottom: 2px dashed #ffffff; /* Creates stitched look */
-  margin: 10px 0;
+  background: #000;
   animation: drawStitchLine 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* TITLE ANIMATION */
 .stitch-title {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 900;
-  letter-spacing: 4px;
-  color: #000000;
+  letter-spacing: 3px;
   opacity: 0;
-  transform: translateY(10px);
   animation: revealTitle 0.3s ease 0.5s forwards;
 }
 
-/* KEYFRAMES */
-@keyframes moveNeedleAcross {
-  0% { left: 0%; }
-  100% { left: 100%; }
+@keyframes moveNeedleAcross { 0% { left: 0%; } 100% { left: 100%; } }
+@keyframes drawStitchLine { 0% { width: 0%; } 100% { width: 100%; } }
+@keyframes revealTitle { to { opacity: 1; } }
+
+.auth-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes drawStitchLine {
-  0% { width: 0%; }
-  100% { width: 100%; }
+.auth-box {
+  background: #ffffff;
+  padding: 40px;
+  border: 2px solid #000000;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
 }
 
-@keyframes revealTitle {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+/* =========================================================
+   5. PRODUCT PAGE & CARDS GRID
+   ========================================================= */
+.products-header {
+  padding: 20px 0;
+  border-bottom: 1px solid #000000;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-link {
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.product-card {
+  border: 1px solid #000000;
+  padding: 20px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 15px;
+}
+
+/* =========================================================
+   6. MODALS (PRODUCT DETAILS & ORDER)
+   ========================================================= */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #ffffff;
+  border: 2px solid #000000;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.product-modal-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  max-width: 800px;
+}
+
+@media (max-width: 700px) {
+  .product-modal-content {
+    grid-template-columns: 1fr;
   }
 }
 
-/* STANDALONE WEBSITE RATING SECTION */
-.rating-section {
-  padding: 80px 0;
-  border-bottom: 1px solid #000000;
-  background-color: #fafafa;
-}
-
-.rating-card {
-  border: 1px solid #000000;
-  background: #ffffff;
-  padding: 40px;
-  text-align: center;
-  max-width: 650px;
-  margin: 0 auto;
-}
-
-.rating-card h2 {
-  font-size: 1.4rem;
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.8rem;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  margin: 15px 0 8px;
-}
-
-.rating-card p {
-  font-size: 0.95rem;
-  color: #555555;
-  margin-bottom: 25px;
-}
-
-/* ANIMATED STAR RATING BOX */
-.star-rating-box {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.star-btn {
-  font-size: 2.5rem;
-  color: #dddddd;
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease;
-  user-select: none;
 }
 
-/* Hover & Active Scale Effects */
-.star-btn:hover {
-  transform: scale(1.35) rotate(-5deg);
+.gallery-main-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border: 1px solid #000000;
 }
 
-.star-btn.active {
-  color: #000000;
-  transform: scale(1.15);
-}
-
-.rating-text-feedback {
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  margin-bottom: 20px;
-  height: 20px;
-  color: #333333;
-}
-
-/* RATING FORM INPUTS */
-.rating-form {
+.thumbnail-list {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  gap: 8px;
   margin-top: 10px;
 }
 
-.rating-form textarea {
-  width: 100%;
-  padding: 12px;
+.thumbnail-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.thumbnail-img.active {
+  border: 2px solid #000000;
+}
+
+.contact-card, .rating-card {
   border: 1px solid #000000;
-  font-size: 0.95rem;
-  outline: none;
-  resize: vertical;
-  font-family: inherit;
+  padding: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+.star-rating-box {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 2rem;
+}
+
+.star-btn {
+  cursor: pointer;
+  color: #dddddd;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.star-btn:hover, .star-btn.active {
+  color: #000000;
+  transform: scale(1.2);
 }
