@@ -1,6 +1,3 @@
-// FORMSPREE ENDPOINT FOR STANDARD ORDERS
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xzedpygv";
-
 // PRODUCT CATALOG WITH MULTI-IMAGE GALLERIES
 const products = [
   {
@@ -177,7 +174,7 @@ function closeModal(id) {
   if (modal) modal.style.display = "none";
 }
 
-// DOM INITIALIZATION
+// DOM INITIALIZATION FOR PRODUCT ORDERS (DIRECT MAILTO)
 document.addEventListener("DOMContentLoaded", () => {
   if (window.feather) feather.replace();
   
@@ -208,26 +205,60 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // STANDARD ORDER FORM SUBMIT
+  // STANDARD PRODUCT ORDER FORM SUBMIT (DIRECT GMAIL HANDLER)
   const orderForm = document.getElementById("order-form");
-  if (orderForm) {
-    orderForm.addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
+  const orderStatusDiv = document.getElementById("product-order-status");
 
-      try {
-        await fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-        alert("Order submitted! Thank you for ordering from WRIGHT'S DIGIT.");
-      } catch (err) {
-        alert("Order submitted! Thank you for ordering from WRIGHT'S DIGIT.");
-      } finally {
-        closeModal("order-modal");
-        this.reset();
+  if (orderForm) {
+    orderForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const customerName = document.querySelector("#order-form input[name='customer_name']").value;
+      const customerEmail = document.querySelector("#order-form input[name='customer_email']").value;
+      const paymentMethod = document.querySelector("#order-form select[name='payment_method']").value;
+      const notes = document.querySelector("#order-form textarea[name='notes']")?.value || "None provided";
+      const productName = activeProduct ? activeProduct.name : "Digital Product";
+      const productPrice = activeProduct ? activeProduct.price : "N/A";
+
+      const recipientEmail = "wrightsdigit@gmail.com";
+      const subject = encodeURIComponent(`New Product Order Request: ${productName}`);
+      
+      const bodyText = `Hello Wright's Digit,
+
+I would like to place an order for the following item:
+
+--------------------------------------------------
+ORDER DETAILS
+--------------------------------------------------
+Product: ${productName}
+Price: ${productPrice}
+Payment Method: ${paymentMethod}
+
+CUSTOMER INFORMATION
+Name: ${customerName}
+Email: ${customerEmail}
+
+NOTES / INSTRUCTIONS:
+${notes}
+
+--------------------------------------------------
+NOTE TO CUSTOMER: Please attach any reference files if needed before clicking send!
+--------------------------------------------------`;
+
+      const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+
+      if (orderStatusDiv) {
+        orderStatusDiv.style.color = "#2e7d32";
+        orderStatusDiv.innerText = "Opening your email app... Please review and click Send!";
       }
+
+      window.location.href = mailtoLink;
+
+      setTimeout(() => {
+        closeModal("order-modal");
+        orderForm.reset();
+        if (orderStatusDiv) orderStatusDiv.innerText = "";
+      }, 3500);
     });
   }
 });
@@ -247,14 +278,6 @@ function closeAboutModal() {
   }
 }
 
-// Close About Modal if user clicks outside content box
-window.addEventListener("click", function(event) {
-  const modal = document.getElementById("about-modal");
-  if (event.target === modal) {
-    modal.style.display = "none";
-  }
-});
-
 // EMBROIDERY ORDER MODAL HANDLERS
 function openEmbroideryModal() {
   const modal = document.getElementById("embroidery-modal");
@@ -270,75 +293,83 @@ function closeEmbroideryModal() {
   }
 }
 
-// Close modal if user clicks background overlay
+// GLOBAL OUTSIDE-CLICK HANDLER FOR MODALS
 window.addEventListener("click", function(event) {
-  const modal = document.getElementById("embroidery-modal");
-  if (event.target === modal) {
-    modal.style.display = "none";
+  const aboutModal = document.getElementById("about-modal");
+  const embroideryModal = document.getElementById("embroidery-modal");
+  
+  if (event.target === aboutModal) {
+    aboutModal.style.display = "none";
+  }
+  if (event.target === embroideryModal) {
+    embroideryModal.style.display = "none";
   }
 });
 
-// WEB3FORMS AJAX SUBMISSION & TIMEOUT HANDLER FOR EMBROIDERY ORDERS
+// EMBROIDERY ORDER FORM SUBMISSION (DIRECT GMAIL / MAILTO HANDLER)
 document.addEventListener("DOMContentLoaded", function() {
   const orderForm = document.getElementById("embroidery-order-form");
   const statusDiv = document.getElementById("form-status");
-  const submitBtn = document.getElementById("submit-order-btn");
 
   if (orderForm) {
     orderForm.addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const formData = new FormData(orderForm);
-      
-      submitBtn.disabled = true;
-      submitBtn.innerText = "SUBMITTING...";
-      statusDiv.style.color = "#000000";
-      statusDiv.innerText = "Uploading artwork & submitting details...";
+      // Gather form fields
+      const name = document.getElementById("cust-name").value;
+      const email = document.getElementById("cust-email").value;
+      const phone = document.getElementById("cust-phone").value;
+      const company = document.getElementById("cust-company").value || "N/A";
+      const width = document.getElementById("cust-width").value;
+      const height = document.getElementById("cust-height").value;
+      const format = document.querySelector("input[name='Required File Format']:checked")?.value || "Not specified";
+      const placement = document.getElementById("cust-placement").value;
+      const message = document.getElementById("cust-message").value || "None provided";
 
-      // Set a 20-second safety timeout for file upload handling
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 20000);
+      const recipientEmail = "wrightsdigit@gmail.com";
+      const subject = encodeURIComponent(`New Free Embroidery Digitizing Order - ${name}`);
 
-      fetch(orderForm.action, {
-        method: "POST",
-        body: formData,
-        signal: controller.signal
-      })
-      .then(async (response) => {
-        clearTimeout(timeoutId);
-        const data = await response.json();
+      const bodyText = `Hello Wright's Digit,
 
-        if (data.success) {
-          statusDiv.style.color = "#2e7d32";
-          statusDiv.innerText = "✓ Submitted Successfully! We will review your order and email you shortly.";
-          orderForm.reset();
-          
-          setTimeout(() => {
-            closeEmbroideryModal();
-            statusDiv.innerText = "";
-            submitBtn.disabled = false;
-            submitBtn.innerText = "SUBMIT ORDER";
-          }, 3500);
-        } else {
-          // Display error returned by Web3Forms
-          submitBtn.disabled = false;
-          submitBtn.innerText = "SUBMIT ORDER";
-          statusDiv.style.color = "#d32f2f";
-          statusDiv.innerText = data.message || "Submission failed. Please check your Access Key.";
-        }
-      })
-      .catch(error => {
-        clearTimeout(timeoutId);
-        submitBtn.disabled = false;
-        submitBtn.innerText = "SUBMIT ORDER";
-        statusDiv.style.color = "#d32f2f";
+I would like to place a custom Free Embroidery Digitizing Order. Here are my design specs:
 
-        if (error.name === 'AbortError') {
-          statusDiv.innerText = "Connection timed out. File might be too large or internet connection is slow.";
-        } else {
-          statusDiv.innerText = "Network Error: Unable to submit. Please check your internet connection.";
-        }
-      });
+--------------------------------------------------
+CUSTOMER DETAILS
+--------------------------------------------------
+Full Name: ${name}
+Email Address: ${email}
+Phone Number: ${phone}
+Company Name: ${company}
+
+--------------------------------------------------
+EMBROIDERY / DESIGN SPECIFICATIONS
+--------------------------------------------------
+Dimensions: ${width} (W) x ${height} (H)
+Required File Format: ${format}
+Placement Location: ${placement}
+
+Special Instructions / Notes:
+${message}
+
+--------------------------------------------------
+ATTACHMENT REMINDER FOR CUSTOMER:
+Please attach your artwork/logo file (PNG, JPG, PDF, SVG, AI, PSD, CDR, etc.) to this email before hitting send!
+--------------------------------------------------`;
+
+      const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+
+      if (statusDiv) {
+        statusDiv.style.color = "#2e7d32";
+        statusDiv.innerText = "Opening your email app... Please attach your artwork file and hit Send!";
+      }
+
+      window.location.href = mailtoLink;
+
+      setTimeout(() => {
+        closeEmbroideryModal();
+        orderForm.reset();
+        if (statusDiv) statusDiv.innerText = "";
+      }, 4000);
     });
   }
 });
