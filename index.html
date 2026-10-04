@@ -23,23 +23,20 @@
 
   <!-- 2. MANDATORY GOOGLE SIGN-IN / SIGN-UP MODAL -->
   <div id="auth-modal" class="auth-overlay">
-    <div class="auth-box">
-      <h2>WELCOME TO WRIGHT'S DIGIT</h2>
-      <p>Please sign in or create an account to access our platform.</p>
-      
-      <!-- Google Sign-In Button Container -->
-      <div id="g_id_onload"
-           data-client_id="1081639446824-k3fvjf6gb475pg7ojs4avdnp47267hbs.apps.googleusercontent.com"
-           data-callback="handleGoogleSignIn"
-           data-auto_prompt="false">
-      </div>
-      <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
-      
-      <div id="user-profile-display" class="user-profile hidden">
-        <p>Logged in as: <strong id="user-email-text"></strong></p>
-        <button onclick="continueToSite()" class="btn btn-primary">CONTINUE TO SITE</button>
-      </div>
+  <div class="auth-box">
+    <span class="close-btn" onclick="hideAuthModal()">&times;</span>
+    <h2>WELCOME TO WRIGHT'S DIGIT</h2>
+    <p>Please sign in or create an account to access our platform.</p>
+    
+    <!-- Google Sign-In Container -->
+    <div id="g_id_onload"
+         data-client_id="1081639446824-k3fvjf6gb475pg7ojs4avdnp47267hbs.apps.googleusercontent.com"
+         data-callback="handleGoogleSignIn"
+         data-auto_prompt="false">
     </div>
+    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
+  </div>
+</div>
   </div>
 
   <!-- 3. HERO & BRAND HEADER -->
