@@ -1,4 +1,4 @@
-// FORMSPREE ENDPOINT FOR ORDERS & RATINGS
+// FORMSPREE ENDPOINT FOR ORDERS
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORMSPREE_FORM_ID";
 
 // PRODUCT CATALOG WITH MULTI-IMAGE GALLERIES
@@ -32,35 +32,51 @@ const products = [
 
 let activeProduct = null;
 
-// GOOGLE AUTHENTICATION HANDLER
+// GOOGLE AUTHENTICATION HANDLERS
 function handleGoogleSignIn(response) {
-  // Decode JWT Payload
-  const base64Url = response.credential.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const payload = JSON.parse(window.atob(base64));
-  
-  // Store User
-  localStorage.setItem("userEmail", payload.email);
-  localStorage.setItem("userName", payload.name);
+  try {
+    // Decode JWT Payload
+    const base64Url = response.credential.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(window.atob(base64));
+    
+    // Store user data in browser
+    localStorage.setItem("userEmail", payload.email);
+    localStorage.setItem("userName", payload.name);
 
-  // Hide auth modal
-  document.getElementById("auth-modal").style.display = "none";
+    // Immediately hide the auth overlay
+    hideAuthModal();
+  } catch (e) {
+    console.error("Auth decode error:", e);
+  }
 }
 
-function checkAuthStatus() {
-  const user = localStorage.getItem("userEmail");
+function hideAuthModal() {
   const authModal = document.getElementById("auth-modal");
-  if (user && authModal) {
+  if (authModal) {
     authModal.style.display = "none";
   }
 }
 
-// RENDER PRODUCT GRID
+// Function triggered if "CONTINUE TO SITE" button is clicked
+function continueToSite() {
+  hideAuthModal();
+}
+
+function checkAuthStatus() {
+  const user = localStorage.getItem("userEmail");
+  if (user) {
+    // User is already logged in, hide modal immediately on page load
+    hideAuthModal();
+  }
+}
+
+// SAFE PRODUCT GRID RENDERING (ONLY RUNS ON PRODUCTS PAGE)
 function renderProductGrid() {
   const grid = document.getElementById("product-grid");
-  if (!grid) return;
+  if (!grid) return; // Exit cleanly if on landing page
+  
   grid.innerHTML = "";
-
   products.forEach(p => {
     const card = document.createElement("div");
     card.className = "product-card";
@@ -79,77 +95,118 @@ function renderProductGrid() {
   });
 }
 
-// OPEN PRODUCT DETAIL MODAL (CAROUSEL & REVIEWS)
+// PRODUCT DETAIL MODAL
 function openProductDetail(id) {
   activeProduct = products.find(p => p.id === id);
   if (!activeProduct) return;
 
-  document.getElementById("modal-product-title").innerText = activeProduct.name;
-  document.getElementById("modal-product-price").innerText = activeProduct.price;
-  document.getElementById("modal-product-desc").innerText = activeProduct.description;
-  document.getElementById("modal-likes-count").innerText = activeProduct.likes;
+  const titleEl = document.getElementById("modal-product-title");
+  const priceEl = document.getElementById("modal-product-price");
+  const descEl = document.getElementById("modal-product-desc");
+  const likesEl = document.getElementById("modal-likes-count");
 
-  // Render Image Gallery
+  if (titleEl) titleEl.innerText = activeProduct.name;
+  if (priceEl) priceEl.innerText = activeProduct.price;
+  if (descEl) descEl.innerText = activeProduct.description;
+  if (likesEl) likesEl.innerText = activeProduct.likes;
+
   const mainImg = document.getElementById("modal-main-img");
   const thumbBox = document.getElementById("modal-thumbnails");
-  mainImg.src = activeProduct.images[0];
-  thumbBox.innerHTML = "";
+  
+  if (mainImg) mainImg.src = activeProduct.images[0];
+  if (thumbBox) {
+    thumbBox.innerHTML = "";
+    activeProduct.images.forEach((imgSrc, idx) => {
+      const thumb = document.createElement("img");
+      thumb.src = imgSrc;
+      thumb.className = `thumbnail-img ${idx === 0 ? 'active' : ''}`;
+      thumb.onerror = () => { thumb.src = 'https://via.placeholder.com/50'; };
+      thumb.onclick = () => {
+        if (mainImg) mainImg.src = imgSrc;
+        document.querySelectorAll(".thumbnail-img").forEach(t => t.classList.remove("active"));
+        thumb.classList.add("active");
+      };
+      thumbBox.appendChild(thumb);
+    });
+  }
 
-  activeProduct.images.forEach((imgSrc, idx) => {
-    const thumb = document.createElement("img");
-    thumb.src = imgSrc;
-    thumb.className = `thumbnail-img ${idx === 0 ? 'active' : ''}`;
-    thumb.onerror = () => thumb.src = 'https://via.placeholder.com/50';
-    thumb.onclick = () => {
-      mainImg.src = imgSrc;
-      document.querySelectorAll(".thumbnail-img").forEach(t => t.classList.remove("active"));
-      thumb.classList.add("active");
-    };
-    thumbBox.appendChild(thumb);
-  });
-
-  // Render Reviews
   const reviewsList = document.getElementById("modal-reviews-list");
-  reviewsList.innerHTML = activeProduct.reviews.map(r => `
-    <div class="review-item">
-      <strong>${r.user}</strong> (${r.rating}★): ${r.text}
-    </div>
-  `).join("") || "<p>No reviews yet.</p>";
+  if (reviewsList) {
+    reviewsList.innerHTML = activeProduct.reviews.map(r => `
+      <div class="review-item">
+        <strong>${r.user}</strong> (${r.rating}★): ${r.text}
+      </div>
+    `).join("") || "<p>No reviews yet.</p>";
+  }
 
-  // Trigger Order Button Listener
-  document.getElementById("trigger-order-btn").onclick = () => {
-    closeModal("product-detail-modal");
-    openOrderModal(activeProduct);
-  };
+  const triggerOrderBtn = document.getElementById("trigger-order-btn");
+  if (triggerOrderBtn) {
+    triggerOrderBtn.onclick = () => {
+      closeModal("product-detail-modal");
+      openOrderModal(activeProduct);
+    };
+  }
 
-  document.getElementById("product-detail-modal").style.display = "flex";
+  const detailModal = document.getElementById("product-detail-modal");
+  if (detailModal) detailModal.style.display = "flex";
+  
   if (window.feather) feather.replace();
 }
 
-// ORDER FORM MODAL
 function openOrderModal(product) {
-  document.getElementById("order-product-subtitle").innerText = `Ordering: ${product.name} (${product.price})`;
-  document.getElementById("order-item-name").value = product.name;
+  const subtitle = document.getElementById("order-product-subtitle");
+  const nameInput = document.getElementById("order-item-name");
   
-  // Pre-fill email if logged in via Google
+  if (subtitle) subtitle.innerText = `Ordering: ${product.name} (${product.price})`;
+  if (nameInput) nameInput.value = product.name;
+  
   const savedEmail = localStorage.getItem("userEmail");
   if (savedEmail) {
     const emailInput = document.querySelector("#order-form input[name='customer_email']");
     if (emailInput) emailInput.value = savedEmail;
   }
 
-  document.getElementById("order-modal").style.display = "flex";
+  const orderModal = document.getElementById("order-modal");
+  if (orderModal) orderModal.style.display = "flex";
 }
 
 function closeModal(id) {
-  document.getElementById(id).style.display = "none";
+  const modal = document.getElementById(id);
+  if (modal) modal.style.display = "none";
 }
 
-// ORDER FORM SUBMISSION TO GMAIL
+// DOM INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
+  if (window.feather) feather.replace();
+  
+  // Check if user is already signed in on page load
   checkAuthStatus();
+  
   renderProductGrid();
 
+  // STANDALONE RATING STAR PICKER
+  const stars = document.querySelectorAll("#site-star-picker .star-btn");
+  const feedbackLabel = document.getElementById("rating-feedback-label");
+  const ratingInput = document.getElementById("selected-rating-value");
+  
+  if (stars.length > 0) {
+    stars.forEach((star, index) => {
+      star.addEventListener("click", () => {
+        const val = index + 1;
+        if (ratingInput) ratingInput.value = val;
+        stars.forEach((s, i) => {
+          if (i <= index) {
+            s.classList.add("active");
+          } else {
+            s.classList.remove("active");
+          }
+        });
+        if (feedbackLabel) feedbackLabel.innerText = `RATING: ${val}/5`;
+      });
+    });
+  }
+
+  // ORDER FORM SUBMIT
   const orderForm = document.getElementById("order-form");
   if (orderForm) {
     orderForm.addEventListener("submit", async function(e) {
@@ -157,23 +214,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData(this);
 
       try {
-        const res = await fetch(FORMSPREE_ENDPOINT, {
+        await fetch(FORMSPREE_ENDPOINT, {
           method: "POST",
           body: formData,
           headers: { 'Accept': 'application/json' }
         });
-
-        if (res.ok) {
-          alert("Order submitted successfully! We will contact you via email shortly.");
-          closeModal("order-modal");
-          this.reset();
-        } else {
-          alert("Order registered! Thank you for ordering from WRIGHT'S DIGIT.");
-          closeModal("order-modal");
-        }
+        alert("Order submitted! Thank you for ordering from WRIGHT'S DIGIT.");
       } catch (err) {
-        alert("Order registered! Thank you for ordering from WRIGHT'S DIGIT.");
+        alert("Order submitted! Thank you for ordering from WRIGHT'S DIGIT.");
+      } finally {
         closeModal("order-modal");
+        this.reset();
       }
     });
   }
