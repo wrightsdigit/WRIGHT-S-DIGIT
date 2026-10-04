@@ -10,21 +10,22 @@
 <body>
 
   <!-- PRODUCT PAGE NAVBAR -->
- <header class="products-header">
-  <div class="container nav-wrapper">
-    <!-- Left: Logo and Brand Name side-by-side -->
-    <a href="index.html" class="brand-group">
-      <img src="logo.png" alt="WRIGHT'S DIGIT Logo" class="nav-logo" onerror="this.style.display='none'">
-      <span class="brand-link">WRIGHT'S DIGIT</span>
-    </a>
-  </div>
-</header>
+  <header class="products-header">
+    <div class="container nav-wrapper">
+      <!-- Left: Logo and Brand Name side-by-side -->
+      <a href="index.html" class="brand-group">
+        <img src="logo.png" alt="WRIGHT'S DIGIT Logo" class="nav-logo" onerror="this.style.display='none'">
+        <span class="brand-link">WRIGHT'S DIGIT</span>
+      </a>
+    </div>
+  </header>
 
-   <div class="order-trigger-container" style="text-align: center; margin: 40px 0;">
-  <button type="button" onclick="openEmbroideryModal()" class="btn btn-primary btn-large">
-    PLACE FREE EMBROIDERY DIGITIZING ORDER
-  </button>
-</div>
+  <div class="order-trigger-container" style="text-align: center; margin: 40px 0;">
+    <button type="button" onclick="openEmbroideryModal()" class="btn btn-primary btn-large">
+      PLACE FREE EMBROIDERY DIGITIZING ORDER
+    </button>
+  </div>
+
   <!-- PRODUCTS GRID -->
   <main class="section">
     <div class="container">
@@ -65,113 +66,126 @@
     </div>
   </div>
 
-  <!-- ORDER FORM MODAL -->
+  <!-- STANDARD PRODUCT ORDER FORM MODAL (DIRECT GMAIL) -->
   <div id="order-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('order-modal')">&times;</span>
       <h3>COMPLETE YOUR ORDER</h3>
       <p id="order-product-subtitle" class="order-subtitle"></p>
 
-      <!-- Formspree Integration -->
       <form id="order-form" class="order-form">
         <input type="hidden" id="order-item-name" name="ordered_product">
         
-        <label>FULL NAME</label>
-        <input type="text" name="customer_name" required placeholder="John Doe">
+        <div class="form-group">
+          <label for="order-customer-name">FULL NAME *</label>
+          <input type="text" id="order-customer-name" name="customer_name" required placeholder="John Doe">
+        </div>
 
-        <label>EMAIL ADDRESS</label>
-        <input type="email" name="customer_email" required placeholder="john@example.com">
+        <div class="form-group">
+          <label for="order-customer-email">EMAIL ADDRESS *</label>
+          <input type="email" id="order-customer-email" name="customer_email" required placeholder="john@example.com">
+        </div>
 
-        <label>PAYMENT METHOD</label>
-        <select name="payment_method" required>
-          <option value="">-- Select Payment Method --</option>
-          <option value="Credit/Debit Card">Credit / Debit Card</option>
-          <option value="Bank Transfer">Bank Transfer</option>
-          <option value="EasyPaisa / JazzCash">EasyPaisa / JazzCash</option>
-          <option value="PayPal">PayPal</option>
-        </select>
+        <div class="form-group">
+          <label for="order-payment-method">PREFERRED PAYMENT METHOD *</label>
+          <select id="order-payment-method" name="payment_method" required>
+            <option value="">-- Select Payment Method --</option>
+            <option value="Credit/Debit Card">Credit / Debit Card</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="EasyPaisa / JazzCash">EasyPaisa / JazzCash</option>
+            <option value="PayPal">PayPal</option>
+          </select>
+        </div>
 
-        <button type="submit" class="btn btn-primary full-width">CONFIRM ORDER</button>
+        <div class="form-group">
+          <label for="order-notes">ADDITIONAL NOTES / SPECIFICATIONS</label>
+          <textarea id="order-notes" name="notes" rows="3" placeholder="Specify quantity, color choices, or special requests..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary full-width">OPEN EMAIL TO COMPLETE ORDER</button>
+        <div id="product-order-status" style="margin-top: 15px; text-align: center; font-weight: bold; font-size: 0.95rem;"></div>
       </form>
     </div>
   </div>
 
-  <!-- EMBROIDERY DIGITIZING ORDER FORM (WEB3FORMS) -->
-<form id="embroidery-order-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
-  
-  <!-- Web3Forms Access Key -->
-  <input type="hidden" name="access_key" value="a8f935a1-c6d7-449c-8ed6-60538d55b90c">
-  <input type="hidden" name="subject" value="New Free Embroidery Digitizing Order - WRIGHT'S DIGIT">
+  <!-- EMBROIDERY DIGITIZING ORDER FORM MODAL (DIRECT GMAIL) -->
+  <div id="embroidery-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeEmbroideryModal()">&times;</span>
+      <h3>FREE EMBROIDERY DIGITIZING ORDER</h3>
 
-  <!-- Customer Info -->
-  <div class="form-group">
-    <label for="cust-name">Full Name *</label>
-    <input type="text" id="cust-name" name="Full Name" required placeholder="Enter your full name">
-  </div>
+      <form id="embroidery-order-form">
+        <!-- Customer Info -->
+        <div class="form-group">
+          <label for="cust-name">Full Name *</label>
+          <input type="text" id="cust-name" name="Full Name" required placeholder="Enter your full name">
+        </div>
 
-  <div class="form-group">
-    <label for="cust-email">Email Address *</label>
-    <input type="email" id="cust-email" name="Email Address" required placeholder="name@example.com">
-  </div>
+        <div class="form-group">
+          <label for="cust-email">Email Address *</label>
+          <input type="email" id="cust-email" name="Email Address" required placeholder="name@example.com">
+        </div>
 
-  <div class="form-group">
-    <label for="cust-phone">Phone Number *</label>
-    <input type="tel" id="cust-phone" name="Phone Number" required placeholder="+1 123 456 7890">
-  </div>
+        <div class="form-group">
+          <label for="cust-phone">Phone Number *</label>
+          <input type="tel" id="cust-phone" name="Phone Number" required placeholder="+1 123 456 7890">
+        </div>
 
-  <div class="form-group">
-    <label for="cust-company">Company Name</label>
-    <input type="text" id="cust-company" name="Company Name" placeholder="Your company or business name">
-  </div>
+        <div class="form-group">
+          <label for="cust-company">Company Name</label>
+          <input type="text" id="cust-company" name="Company Name" placeholder="Your company or business name">
+        </div>
 
-  <!-- Dimensions -->
-  <div class="form-row">
-    <div class="form-group half-width">
-      <label for="cust-width">Width (Inches/cm) *</label>
-      <input type="text" id="cust-width" name="Design Width" required placeholder="e.g., 4 in">
+        <!-- Dimensions -->
+        <div class="form-row" style="display: flex; gap: 15px;">
+          <div class="form-group half-width" style="flex: 1;">
+            <label for="cust-width">Width (Inches/cm) *</label>
+            <input type="text" id="cust-width" name="Design Width" required placeholder="e.g., 4 in">
+          </div>
+          <div class="form-group half-width" style="flex: 1;">
+            <label for="cust-height">Height (Inches/cm) *</label>
+            <input type="text" id="cust-height" name="Design Height" required placeholder="e.g., 3 in">
+          </div>
+        </div>
+
+        <!-- Format Radio Options -->
+        <div class="form-group">
+          <label>File Format Required *</label>
+          <div class="format-options">
+            <label><input type="radio" name="Required File Format" value="PES" required> PES</label>
+            <label><input type="radio" name="Required File Format" value="DST"> DST</label>
+            <label><input type="radio" name="Required File Format" value="EPS"> EPS</label>
+            <label><input type="radio" name="Required File Format" value="AI"> AI</label>
+            <label><input type="radio" name="Required File Format" value="CDR"> CDR</label>
+          </div>
+        </div>
+
+        <!-- Placement & Message -->
+        <div class="form-group">
+          <label for="cust-placement">Placement *</label>
+          <input type="text" id="cust-placement" name="Placement Location" required placeholder="e.g., Left Chest, Hat / Cap, Back of Jacket">
+        </div>
+
+        <div class="form-group">
+          <label for="cust-message">Order Instructions / Message</label>
+          <textarea id="cust-message" name="Special Instructions" rows="3" placeholder="Add thread color specs, garment details, or specific notes..."></textarea>
+        </div>
+
+        <!-- Instructions for Artwork Attachment -->
+        <div class="file-instruction-box" style="background: #f8f9fa; border: 1px dashed #ccc; padding: 12px; margin: 15px 0; border-radius: 6px;">
+          <p style="margin: 0; font-size: 0.88rem; color: #555; line-height: 1.4;">
+            📎 <strong>Artwork Attachment Notice:</strong> When you click the button below, your email client (Gmail, Apple Mail, etc.) will automatically open with all your details pre-filled. Please <strong>attach your artwork file</strong> directly to that draft email before hitting send!
+          </p>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submit-order-btn" class="btn btn-primary submit-btn full-width">OPEN EMAIL TO ATTACH ARTWORK & SEND</button>
+
+        <!-- Live Status Message -->
+        <div id="form-status" style="margin-top: 15px; text-align: center; font-weight: bold; font-size: 0.95rem;"></div>
+      </form>
     </div>
-    <div class="form-group half-width">
-      <label for="cust-height">Height (Inches/cm) *</label>
-      <input type="text" id="cust-height" name="Design Height" required placeholder="e.g., 3 in">
-    </div>
   </div>
-
-  <!-- Format Radio Options -->
-  <div class="form-group">
-    <label>File Format Required *</label>
-    <div class="format-options">
-      <label><input type="radio" name="Required File Format" value="PES" required> PES</label>
-      <label><input type="radio" name="Required File Format" value="DST"> DST</label>
-      <label><input type="radio" name="Required File Format" value="EPS"> EPS</label>
-      <label><input type="radio" name="Required File Format" value="AI"> AI</label>
-      <label><input type="radio" name="Required File Format" value="CDR"> CDR</label>
-    </div>
-  </div>
-
-  <!-- Placement & Message -->
-  <div class="form-group">
-    <label for="cust-placement">Placement *</label>
-    <input type="text" id="cust-placement" name="Placement Location" required placeholder="e.g., Left Chest, Hat / Cap, Back of Jacket">
-  </div>
-
-  <div class="form-group">
-    <label for="cust-message">Order Instructions / Message</label>
-    <textarea id="cust-message" name="Special Instructions" rows="3" placeholder="Add thread color specs, garment details, or specific notes..."></textarea>
-  </div>
-
-  <!-- File Upload -->
-  <div class="form-group">
-    <label for="cust-file">Upload Artwork / Image *</label>
-    <input type="file" id="cust-file" name="attachment" required accept="image/*, .pdf, .ai, .eps, .psd, .cdr">
-    <small class="help-text">Choose artwork file from your device library.</small>
-  </div>
-
-  <!-- Submit Button -->
-  <button type="submit" id="submit-order-btn" class="btn btn-primary submit-btn">SUBMIT ORDER</button>
-
-  <!-- Live Status Message -->
-  <div id="form-status" style="margin-top: 15px; text-align: center; font-weight: bold; font-size: 0.95rem;"></div>
-</form>
 
   <script src="script.js"></script>
 </body>
