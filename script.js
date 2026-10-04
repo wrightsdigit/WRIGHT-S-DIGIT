@@ -254,3 +254,26 @@ window.addEventListener("click", function(event) {
     modal.style.display = "none";
   }
 });
+
+// EMBROIDERY ORDER MODAL HANDLERS
+function openEmbroideryModal() {
+  const modal = document.getElementById("embroidery-modal");
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
+
+function closeEmbroideryModal() {
+  const modal = document.getElementById("embroidery-modal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+// Close modal if user clicks background overlay
+window.addEventListener("click", function(event) {
+  const modal = document.getElementById("embroidery-modal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+});
