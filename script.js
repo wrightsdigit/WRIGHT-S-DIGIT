@@ -1,292 +1,156 @@
-// PRODUCT CATALOG WITH MULTI-IMAGE GALLERIES
+// Sample Product Data
 const products = [
   {
-    id: "p1",
-    name: "png to DST",
-    price: "$5",
-    images: ["product1.png", "product1-2.jpg", "product1-3.jpg", "product1-4.jpg"],
-    description: "We convert your normal png,jpg files to machine working PES,DST.EPS,CDR files to help you work faster",
-    likes: 124,
-    rating: 4.8,
-    reviews: [
-      { user: "Alex M.", text: "Very fast response time and high quality files mine was PES!", rating: 5 },
-      { user: "Sarah T.", text: "I got my file in just a couple of hours.What a lightning fast service .I rate it 4.5", rating: 4.5 }
-    ]
+    id: 1,
+    title: "Cyber Skull Embroidered Patch",
+    category: "PATCH",
+    price: "$18.00",
+    description: "High-density 100% embroidered patch with iron-on backing and reinforced merrowed border.",
+    images: [
+      "https://picsum.photos/id/1062/400/300",
+      "https://picsum.photos/id/1025/400/300"
+    ],
+    specs: ["Stitch Count: 14,200", "Dimensions: 3.5\" x 3.5\"", "Thread: Madeira Rayon", "Backing: Heat-seal Iron-On"]
   },
   {
-    id: "p2",
-    name: "PNG monogram file to DST",
-    price: "$5",
-    images: ["product2.png", "product2-2.jpg", "product2-3.jpg"],
-    description: "We gurentee you this type of clean output with our provided high quality machine running files.",
-    likes: 89,
-    rating: 5.0,
-    reviews: [
-      { user: "David K.", text: "Saved my time a lot.I give it a 5 star rating!.", rating: 5 }
-    ]
+    id: 2,
+    title: "Custom Digitized Logo File",
+    category: "DIGITIZING",
+    price: "$25.00",
+    description: "Manual digitizing service tailored for left-chest or hat placements with zero puckering guaranteed.",
+    images: [
+      "https://picsum.photos/id/1069/400/300",
+      "https://picsum.photos/id/1060/400/300"
+    ],
+    specs: ["Formats: DST, PES, EXP, EMB", "Turnaround: 24 Hours", "Free Revisions: Unlimited minor tweaks"]
+  },
+  {
+    id: 3,
+    title: "Vintage Botanical Hoodie",
+    category: "APPAREL",
+    price: "$65.00",
+    description: "Heavyweight 400GSM cotton hoodie featuring direct-to-garment chest and sleeve embroidery.",
+    images: [
+      "https://picsum.photos/id/1005/400/300",
+      "https://picsum.photos/id/1011/400/300"
+    ],
+    specs: ["Stitch Count: 28,500", "Material: 100% Organic Cotton", "Fit: Oversized Streetwear"]
   }
 ];
 
-let activeProduct = null;
-
-// GOOGLE AUTHENTICATION HANDLERS
-function handleGoogleSignIn(response) {
-  try {
-    const base64Url = response.credential.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const payload = JSON.parse(window.atob(base64));
-    
-    localStorage.setItem("userEmail", payload.email);
-    localStorage.setItem("userName", payload.name);
-
-    hideAuthModal();
-  } catch (e) {
-    console.error("Auth decode error:", e);
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. STITCH PRELOADER LOGIC
+  const preloader = document.getElementById("stitch-preloader");
+  if (preloader) {
+    setTimeout(() => {
+      preloader.classList.add("fade-out");
+    }, 1100);
   }
-}
 
-function hideAuthModal() {
-  const authModal = document.getElementById("auth-modal");
-  if (authModal) {
-    authModal.style.display = "none";
-    authModal.style.visibility = "hidden";
-  }
-}
+  // 2. MODAL HELPER FUNCTIONS
+  const openModal = (modal) => modal && modal.classList.add("active");
+  const closeModal = (modal) => modal && modal.classList.remove("active");
 
-function continueToSite() {
-  if (!localStorage.getItem("userEmail")) {
-    localStorage.setItem("userEmail", "guest@wrightsdigit.com");
-  }
-  hideAuthModal();
-}
+  // Digitizing Modal
+  const digitizingModal = document.getElementById("digitizing-modal");
+  const openDigitizingBtns = [
+    document.getElementById("open-digitizing-btn"),
+    document.getElementById("footer-digitizing-btn")
+  ];
+  const closeDigitizingBtn = document.getElementById("close-digitizing-btn");
 
-function checkAuthStatus() {
-  const user = localStorage.getItem("userEmail");
-  if (user) {
-    hideAuthModal();
-  }
-}
-
-// SAFE PRODUCT GRID RENDERING (Pure catalog view - No order buttons)
-function renderProductGrid() {
-  const grid = document.getElementById("product-grid");
-  if (!grid) return;
-  
-  grid.innerHTML = "";
-  products.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.onclick = () => openProductDetail(p.id);
-    
-    card.innerHTML = `
-      <img src="${p.images[0]}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200?text=${encodeURIComponent(p.name)}'">
-      <div class="product-details">
-        <h3>${p.name}</h3>
-        <span class="price">${p.price}</span>
-        <div class="rating-stars">★★★★★ (${p.rating})</div>
-        <p>${p.description}</p>
-      </div>
-    `;
-    grid.appendChild(card);
+  openDigitizingBtns.forEach(btn => {
+    if (btn) btn.addEventListener("click", () => openModal(digitizingModal));
   });
-}
+  if (closeDigitizingBtn) closeDigitizingBtn.addEventListener("click", () => closeModal(digitizingModal));
 
-// PRODUCT DETAIL POPUP MODAL
-function openProductDetail(id) {
-  activeProduct = products.find(p => p.id === id);
-  if (!activeProduct) return;
+  // About Modal
+  const aboutModal = document.getElementById("about-modal");
+  const openAboutBtn = document.getElementById("open-about-link");
+  const closeAboutBtn = document.getElementById("close-about-btn");
 
-  const titleEl = document.getElementById("modal-product-title");
-  const priceEl = document.getElementById("modal-product-price");
-  const descEl = document.getElementById("modal-product-desc");
-  const likesEl = document.getElementById("modal-likes-count");
-
-  if (titleEl) titleEl.innerText = activeProduct.name;
-  if (priceEl) priceEl.innerText = activeProduct.price;
-  if (descEl) descEl.innerText = activeProduct.description;
-  if (likesEl) likesEl.innerText = activeProduct.likes;
-
-  const mainImg = document.getElementById("modal-main-img");
-  const thumbBox = document.getElementById("modal-thumbnails");
-  
-  if (mainImg) mainImg.src = activeProduct.images[0];
-  if (thumbBox) {
-    thumbBox.innerHTML = "";
-    activeProduct.images.forEach((imgSrc, idx) => {
-      const thumb = document.createElement("img");
-      thumb.src = imgSrc;
-      thumb.className = `thumbnail-img ${idx === 0 ? 'active' : ''}`;
-      thumb.onerror = () => { thumb.src = 'https://via.placeholder.com/50'; };
-      thumb.onclick = () => {
-        if (mainImg) mainImg.src = imgSrc;
-        document.querySelectorAll(".thumbnail-img").forEach(t => t.classList.remove("active"));
-        thumb.classList.add("active");
-      };
-      thumbBox.appendChild(thumb);
+  if (openAboutBtn) {
+    openAboutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModal(aboutModal);
     });
   }
+  if (closeAboutBtn) closeAboutBtn.addEventListener("click", () => closeModal(aboutModal));
 
-  const reviewsList = document.getElementById("modal-reviews-list");
-  if (reviewsList) {
-    reviewsList.innerHTML = activeProduct.reviews.map(r => `
-      <div class="review-item">
-        <strong>${r.user}</strong> (${r.rating}★): ${r.text}
-      </div>
-    `).join("") || "<p>No reviews yet.</p>";
-  }
-
-  const detailModal = document.getElementById("product-detail-modal");
-  if (detailModal) detailModal.style.display = "flex";
-  
-  if (window.feather) feather.replace();
-}
-
-function closeModal(id) {
-  const modal = document.getElementById(id);
-  if (modal) modal.style.display = "none";
-}
-
-// FIXED EMBROIDERY ORDER MODAL CONTROLLERS
-function openEmbroideryModal(e) {
-  if (e) {
-    e.preventDefault();
-    e.stopPropagation(); // Stops event from instantly triggering global window.onclick
-  }
-  const modal = document.getElementById("embroidery-modal");
-  if (modal) {
-    modal.style.display = "flex";
-  }
-}
-
-function closeEmbroideryModal() {
-  const modal = document.getElementById("embroidery-modal");
-  if (modal) {
-    modal.style.display = "none";
-  }
-}
-
-// ABOUT US MODAL HANDLERS
-function openAboutModal() {
-  const modal = document.getElementById("about-modal");
-  if (modal) modal.style.display = "flex";
-}
-
-function closeAboutModal() {
-  const modal = document.getElementById("about-modal");
-  if (modal) modal.style.display = "none";
-}
-
-// FIXED GLOBAL OUTSIDE-CLICK DISMISS
-window.addEventListener("click", function(event) {
-  const modals = [
-    "about-modal",
-    "embroidery-modal",
-    "product-detail-modal",
-    "order-modal",
-    "auth-modal"
-  ];
-  
-  modals.forEach(id => {
-    const m = document.getElementById(id);
-    // Only close if the user clicks directly on the dark outer background overlay
-    if (m && event.target === m) {
-      m.style.display = "none";
+  // Close modals when clicking overlay background
+  window.addEventListener("click", (e) => {
+    if (e.target.classList.contains("modal")) {
+      closeModal(e.target);
     }
   });
-});
 
-// INITIALIZE SYSTEM & FORM HANDLERS
-document.addEventListener("DOMContentLoaded", () => {
-  if (window.feather) feather.replace();
-  
-  checkAuthStatus();
-  renderProductGrid();
-
-  // STANDALONE RATING STAR PICKER
-  const stars = document.querySelectorAll("#site-star-picker .star-btn");
-  const feedbackLabel = document.getElementById("rating-feedback-label");
-  const ratingInput = document.getElementById("selected-rating-value");
-  
-  if (stars.length > 0) {
-    stars.forEach((star, index) => {
-      star.addEventListener("click", () => {
-        const val = index + 1;
-        if (ratingInput) ratingInput.value = val;
-        stars.forEach((s, i) => {
-          if (i <= index) {
-            s.classList.add("active");
-          } else {
-            s.classList.remove("active");
-          }
-        });
-        if (feedbackLabel) feedbackLabel.innerText = `RATING: ${val}/5`;
-      });
+  // 3. DIGITIZING FORM SUBMISSION
+  const digitizingForm = document.getElementById("digitizing-form");
+  if (digitizingForm) {
+    digitizingForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Thank you! Your digitizing quote request has been received. We will respond within 12 hours.");
+      closeModal(digitizingModal);
+      digitizingForm.reset();
     });
   }
 
-  // MAIN FREE EMBROIDERY DIGITIZING FORM SUBMISSION (MAILTO GENERATOR)
-  const embroideryForm = document.getElementById("embroidery-order-form");
-  const embroideryStatusDiv = document.getElementById("form-status");
+  // 4. PRODUCT GRID POPULATION & DETAIL MODAL (FOR PRODUCTS.HTML)
+  const productGrid = document.getElementById("product-grid");
+  const productModal = document.getElementById("product-modal");
+  const closeProductBtn = document.getElementById("close-product-btn");
 
-  if (embroideryForm) {
-    embroideryForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      // Collect customer form details
-      const name = document.getElementById("cust-name").value;
-      const email = document.getElementById("cust-email").value;
-      const phone = document.getElementById("cust-phone").value;
-      const company = document.getElementById("cust-company").value || "N/A";
-      const width = document.getElementById("cust-width").value;
-      const height = document.getElementById("cust-height").value;
-      const format = document.querySelector("input[name='Required File Format']:checked")?.value || "Not specified";
-      const placement = document.getElementById("cust-placement").value;
-      const message = document.getElementById("cust-message").value || "None provided";
-
-      const recipientEmail = "wrightsdigit@gmail.com";
-      const subject = encodeURIComponent(`New Free Embroidery Digitizing Order - ${name}`);
-
-      const bodyText = `Hello Wright's Digit,
-
-I would like to place a custom Free Embroidery Digitizing Order. Here are my design specs:
-
---------------------------------------------------
-CUSTOMER DETAILS
---------------------------------------------------
-Full Name: ${name}
-Email Address: ${email}
-Phone Number: ${phone}
-Company Name: ${company}
-
---------------------------------------------------
-EMBROIDERY / DESIGN SPECIFICATIONS
---------------------------------------------------
-Dimensions: ${width} (W) x ${height} (H)
-Required File Format: ${format}
-Placement Location: ${placement}
-
-Special Instructions / Notes:
-${message}
-
---------------------------------------------------
-ATTACHMENT REMINDER FOR CUSTOMER:
-Please attach your artwork/logo file (PNG, JPG, PDF, SVG, AI, PSD, CDR, etc.) to this email before hitting send!
---------------------------------------------------`;
-
-      const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
-
-      if (embroideryStatusDiv) {
-        embroideryStatusDiv.style.color = "#2e7d32";
-        embroideryStatusDiv.innerText = "Opening your email app... Please attach your artwork file and hit Send!";
-      }
-
-      window.location.href = mailtoLink;
-
-      setTimeout(() => {
-        closeEmbroideryModal();
-        embroideryForm.reset();
-        if (embroideryStatusDiv) embroideryStatusDiv.innerText = "";
-      }, 4000);
+  if (productGrid) {
+    // Render product cards
+    products.forEach((product) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.images[0]}" alt="${product.title}" class="product-image">
+        <span class="badge">${product.category}</span>
+        <h3>${product.title}</h3>
+        <p class="price">${product.price}</p>
+      `;
+      card.addEventListener("click", () => showProductDetails(product));
+      productGrid.appendChild(card);
     });
+  }
+
+  if (closeProductBtn) closeProductBtn.addEventListener("click", () => closeModal(productModal));
+
+  function showProductDetails(product) {
+    document.getElementById("modal-title").textContent = product.title;
+    document.getElementById("modal-badge").textContent = product.category;
+    document.getElementById("modal-price").textContent = product.price;
+    document.getElementById("modal-description").textContent = product.description;
+
+    const mainImg = document.getElementById("modal-main-image");
+    mainImg.src = product.images[0];
+
+    // Populate thumbnails
+    const thumbContainer = document.getElementById("modal-thumbnails");
+    thumbContainer.innerHTML = "";
+    product.images.forEach((imgUrl, idx) => {
+      const thumb = document.createElement("img");
+      thumb.src = imgUrl;
+      thumb.className = `thumbnail-img ${idx === 0 ? 'active' : ''}`;
+      thumb.addEventListener("click", () => {
+        mainImg.src = imgUrl;
+        document.querySelectorAll(".thumbnail-img").forEach(t => t.classList.remove("active"));
+        thumb.classList.add("active");
+      });
+      thumbContainer.appendChild(thumb);
+    });
+
+    // Populate specs
+    const specList = document.getElementById("modal-specs");
+    specList.innerHTML = "";
+    product.specs.forEach(spec => {
+      const li = document.createElement("li");
+      li.textContent = spec;
+      specList.appendChild(li);
+    });
+
+    openModal(productModal);
   }
 });
