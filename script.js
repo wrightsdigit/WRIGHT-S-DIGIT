@@ -2,27 +2,27 @@
 const products = [
   {
     id: "p1",
-    name: "Minimalist UI Kit",
-    price: "$49",
+    name: "png to DST",
+    price: "$5",
     images: ["product1.png", "product1-2.jpg", "product1-3.jpg", "product1-4.jpg"],
-    description: "High-contrast component library for modern web platforms.",
+    description: "We convert your normal png,jpg files to machine working PES,DST.EPS,CDR files to help you work faster",
     likes: 124,
     rating: 4.8,
     reviews: [
-      { user: "Alex M.", text: "Extremely clean code structure!", rating: 5 },
-      { user: "Sarah T.", text: "Sleek and easy to customize.", rating: 4.5 }
+      { user: "Alex M.", text: "Very fast response time and high quality files mine was PES!", rating: 5 },
+      { user: "Sarah T.", text: "I got my file in just a couple of hours.What a lightning fast service .I rate it 4.5", rating: 4.5 }
     ]
   },
   {
     id: "p2",
-    name: "Automation Engine",
-    price: "$99",
+    name: "PNG monogram file to DST",
+    price: "$5",
     images: ["product2.png", "product2-2.jpg", "product2-3.jpg"],
-    description: "Lightweight digital script set designed to optimize business workflows.",
+    description: "We gurentee you this type of clean output with our provided high quality machine running files.",
     likes: 89,
     rating: 5.0,
     reviews: [
-      { user: "David K.", text: "Saved our team hours of manual work.", rating: 5 }
+      { user: "David K.", text: "Saved my time a lot.I give it a 5 star rating!.", rating: 5 }
     ]
   }
 ];
