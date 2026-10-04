@@ -21,7 +21,7 @@
   </div>
 </div>
 
-  <!-- MANDATORY GOOGLE SIGN-IN / SIGN-UP MODAL -->
+<!-- MANDATORY GOOGLE SIGN-IN / SIGN-UP MODAL -->
 <div id="auth-modal" class="auth-overlay">
   <div class="auth-box">
     <h2>WELCOME TO WRIGHT'S DIGIT</h2>
@@ -37,8 +37,13 @@
       <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
     </div>
 
+    <!-- DIRECT INLINE UNLOCK BUTTON -->
     <div style="margin-top: 15px;">
-      <button onclick="continueToSite()" class="btn btn-outline full-width">CONTINUE TO SITE &rarr;</button>
+      <button type="button" 
+              onclick="document.getElementById('auth-modal').style.display='none'; localStorage.setItem('userEmail', 'guest@wrightsdigit.com');" 
+              class="btn btn-outline full-width">
+        CONTINUE TO SITE &rarr;
+      </button>
     </div>
   </div>
 </div>
