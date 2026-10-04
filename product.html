@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products & Work Showcase - Wrights Digit</title>
+  <title>Products & Order Digitizing - WRIGHTS DIGIT</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,8 +12,9 @@
   <header class="products-header">
     <div class="container nav-wrapper">
       <a href="index.html" class="brand-group">
-        <span class="brand-link">Wrights Digit</span>
+        <span class="brand-link">WRIGHTS DIGIT</span>
       </a>
+      <button id="open-digitizing-btn" class="btn btn-primary">ORDER DIGITIZING</button>
     </div>
   </header>
 
@@ -23,7 +24,7 @@
       <div class="text-center">
         <span class="badge">CATALOG & PORTFOLIO</span>
         <h2>FEATURED EMBROIDERY WORK</h2>
-        <p class="section-desc">Click on any product to view full details and image gallery.</p>
+        <p class="section-desc">Click on any product to view details, or hit "Order Digitizing" above for custom logo files.</p>
       </div>
 
       <div class="product-grid" id="product-grid">
@@ -31,6 +32,68 @@
       </div>
     </div>
   </main>
+
+  <!-- DIGITIZING ORDER FORM MODAL (MAILTO) -->
+  <div id="digitizing-modal" class="modal">
+    <div class="modal-content form-modal">
+      <button class="close-btn" id="close-digitizing-btn">&times;</button>
+      <div class="text-center">
+        <span class="badge">CUSTOM SERVICE</span>
+        <h2>ORDER DIGITIZING</h2>
+        <p class="help-text">Submitting will open your email app with the order details pre-filled.</p>
+      </div>
+      
+      <!-- REPLACE 'YOUR_GMAIL_ADDRESS@gmail.com' WITH YOUR ACTUAL GMAIL ADDRESS -->
+      <form id="digitizing-form" action="mailto:wrightsdigit@gmail.com" method="POST" enctype="text/plain">
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="client-name">Full Name</label>
+            <input type="text" id="client-name" name="Full Name" required placeholder="John Doe">
+          </div>
+          <div class="form-group half-width">
+            <label for="company-name">Company / Brand Name</label>
+            <input type="text" id="company-name" name="Company Name" placeholder="Stitch Studio LLC">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="client-email">Email Address</label>
+            <input type="email" id="client-email" name="Email" required placeholder="john@example.com">
+          </div>
+          <div class="form-group half-width">
+            <label for="phone-number">Phone Number / WhatsApp</label>
+            <input type="tel" id="phone-number" name="Phone Number" required placeholder="+1 (555) 000-0000">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="design-size">Required Size (Width x Height)</label>
+          <input type="text" id="design-size" name="Design Size" required placeholder="e.g., 4x4 inches, Cap Size, Full Back">
+        </div>
+
+        <div class="form-group">
+          <label>Required File Formats</label>
+          <div class="format-options">
+            <label><input type="checkbox" name="Format_DST" value="Yes" checked> DST</label>
+            <label><input type="checkbox" name="Format_PES" value="Yes"> PES</label>
+            <label><input type="checkbox" name="Format_EPS" value="Yes"> EPS</label>
+            <label><input type="checkbox" name="Format_AI" value="Yes"> AI</label>
+            <label><input type="checkbox" name="Format_CRD" value="Yes"> CDR</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="instructions">Special Instructions</label>
+          <textarea id="instructions" name="Special Instructions" rows="3" placeholder="Specify garment placement (Hat, Left Chest, Jacket Back) or thread preferences."></textarea>
+        </div>
+
+        <p class="help-text" style="margin-bottom: 15px;">* Note: Please attach your artwork file (PNG, JPG, PDF, AI) directly to the email that opens when you submit.</p>
+
+        <button type="submit" class="btn btn-primary submit-btn">SUBMIT DIGITIZING ORDER</button>
+      </form>
+    </div>
+  </div>
 
   <!-- DYNAMIC PRODUCT DETAIL MODAL -->
   <div id="product-modal" class="modal">
@@ -49,7 +112,7 @@
           <h4>STITCH SPECIFICATIONS:</h4>
           <ul class="spec-list" id="modal-specs"></ul>
         </div>
-        <button class="btn btn-primary full-width" style="margin-top:20px;" onclick="alert('Order inquiry submitted for this item!')">INQUIRE ABOUT THIS ITEM</button>
+        <button class="btn btn-primary full-width" style="margin-top:20px;" onclick="alert('Inquiry received!')">INQUIRE ABOUT THIS ITEM</button>
       </div>
     </div>
   </div>
@@ -58,8 +121,8 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-col">
-        <h3>Wrights Digit</h3>
-        <p>We deliver quality.</p>
+        <h3>WRIGHTS DIGIT</h3>
+        <p>Precision embroidery digitizing & high-quality embroidered merchandise.</p>
       </div>
       <div class="footer-col">
         <h4>NAVIGATION</h4>
@@ -70,7 +133,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 Wrights Digit. All rights reserved.</p>
+      <p>&copy; 2026 WRIGHTS DIGIT. All rights reserved.</p>
     </div>
   </footer>
 
