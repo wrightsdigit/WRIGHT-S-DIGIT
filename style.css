@@ -233,13 +233,6 @@ a {
   letter-spacing: 1px;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
-}
-
 .product-card {
   border: 1px solid #000000;
   padding: 20px;
