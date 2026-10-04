@@ -138,14 +138,6 @@ function openProductDetail(id) {
     `).join("") || "<p>No reviews yet.</p>";
   }
 
-  const triggerOrderBtn = document.getElementById("trigger-order-btn");
-  if (triggerOrderBtn) {
-    triggerOrderBtn.onclick = () => {
-      closeModal("product-detail-modal");
-      openOrderModal(activeProduct);
-    };
-  }
-
   const detailModal = document.getElementById("product-detail-modal");
   if (detailModal) detailModal.style.display = "flex";
   
