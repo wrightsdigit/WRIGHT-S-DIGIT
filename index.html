@@ -3,167 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WRIGHT'S DIGIT | Digitizing Embroidery Solutions</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Google Sign-In Library -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- Feather Icons -->
-  <script src="https://unpkg.com/feather-icons"></script>
+  <title>Stitchcraft - Custom Embroidery & Digitizing</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- STITCH PRELOADER -->
-<div id="stitch-preloader">
-  <div class="stitch-box">
-    <div class="needle-wrapper"><div class="needle-body"></div></div>
-    <div class="stitch-line"></div>
-    <h1 class="stitch-title">WRIGHT'S DIGIT</h1>
-  </div>
-</div>
-
-<!-- MANDATORY GOOGLE SIGN-IN / SIGN-UP MODAL -->
-<div id="auth-modal" class="auth-overlay">
-  <div class="auth-box">
-    <h2>WELCOME TO WRIGHT'S DIGIT</h2>
-    <p>Please sign in or create an account to access our platform.</p>
-    
-    <!-- Google Sign-In Container -->
-    <div style="display: flex; justify-content: center; margin: 20px 0;">
-      <div id="g_id_onload"
-           data-client_id="1081639446824-k3fvjf6gb475pg7ojs4avdnp47267hbs.apps.googleusercontent.com"
-           data-callback="handleGoogleSignIn"
-           data-auto_prompt="false">
+  <!-- STITCH ANIMATED PRELOADER -->
+  <div id="stitch-preloader">
+    <div class="stitch-box">
+      <div class="needle-wrapper">
+        <div class="needle-body"></div>
       </div>
-      <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
-    </div>
-
-    <!-- DIRECT INLINE UNLOCK BUTTON -->
-    <div style="margin-top: 15px;">
-      <button type="button" 
-              onclick="document.getElementById('auth-modal').style.display='none'; localStorage.setItem('userEmail', 'guest@wrightsdigit.com');" 
-              class="btn btn-outline full-width">
-        CONTINUE TO SITE &rarr;
-      </button>
+      <div class="stitch-line"></div>
+      <h2 class="stitch-title">STITCHCRAFT</h2>
     </div>
   </div>
-</div>
 
- <header class="hero-header text-center">
-  <div class="brand-container">
-    <!-- Replace logo.png with your exact logo image filename on GitHub -->
-    <img src="logo.png" alt="WRIGHT'S DIGIT Logo" class="brand-logo" onerror="this.style.display='none'">
-    <h1 class="brand-title">WRIGHT'S DIGIT</h1>
-  </div>
-  <p class="brand-slogan">We believe in providing quality to our clients.</p>
-</header>
-
-  <!-- 4. WHAT WE DO SECTION -->
-  <section class="section what-we-do">
-    <div class="container text-center">
-      <h2>What we provide</h2>
-      <p class="section-desc">
-        We provide you with high quality PES,DST,EPS,AI and CDR files out of you normal PNG,JPG,SVJ format file that we gurentee are soot on printing machines with out thread break inbetween production.Also we offer you lightning fast service and 24/7 customer support so your work keeps moving.What you have to do is just provide us the files and select your required format in which you want your provided file to be converted.
-      </p>
-      <a href="product.html" class="btn btn-primary btn-large">Explore what we Offer & place your embroidery digitizing order. &rarr;</a>
-    </div>
-  </section>
-
-  <!-- 5. ABOUT US SECTION -->
-  <section class="section about-section">
-    <div class="container text-center">
-      <span class="badge">ABOUT US</span>
-      <h2>OUR PHILOSOPHY</h2>
-      <p class="section-desc">
-        We Don't promote false advertising and non-professional work.Our team works hard to deliver only high quality and professioanl work to our client no matter what happens.Also our team consist of higly skilled professional who are skilled in their work and are looking forward to help you work faster!.
-      </p>
-    </div>
-  </section>
-
-  <!-- 6. CONTACT SECTION -->
-  <section id="contact" class="section contact-section">
-    <div class="container text-center">
-      <h2 class="section-title">CONTACT US</h2>
-      <div class="contact-card">
-        <div class="mailbox-icon-container">
-          <svg class="mailbox-icon" viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-        </div>
-        <p class="contact-subtitle">HAVE QUESTIONS OR NEED CUSTOM SOLUTIONS?</p>
-        <a href="mailto:wrightsdigit@gmail.com" class="email-address">wrightsdigit@gmail.com</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. WEBSITE RATING SECTION -->
-  <section id="feedback" class="section rating-section">
+  <!-- MAIN HERO SECTION -->
+  <header class="hero-header text-center">
     <div class="container">
-      <div class="rating-card">
-        <span class="badge">FEEDBACK</span>
-        <h2>RATE YOUR EXPERIENCE</h2>
-        <div class="star-rating-box" id="site-star-picker">
-          <span class="star-btn" data-value="1">&#9733;</span>
-          <span class="star-btn" data-value="2">&#9733;</span>
-          <span class="star-btn" data-value="3">&#9733;</span>
-          <span class="star-btn" data-value="4">&#9733;</span>
-          <span class="star-btn" data-value="5">&#9733;</span>
+      <div class="brand-container">
+        <h1 class="brand-title">STITCHCRAFT</h1>
+      </div>
+      <p class="brand-slogan">PRECISION DIGITIZING & HIGH-END EMBROIDERY</p>
+      <span class="badge">EST. 2026</span>
+      <p class="section-desc">
+        Transforming artworks into high-density embroidery digitizing files and bespoke embroidered products. Fast turnaround and guaranteed stitch quality.
+      </p>
+      <div class="hero-actions">
+        <a href="products.html" class="btn btn-primary btn-large">EXPLORE PRODUCTS</a>
+        <button id="open-digitizing-btn" class="btn btn-outline btn-large">ORDER DIGITIZING</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES / SERVICES SECTION -->
+  <section class="section">
+    <div class="container text-center">
+      <span class="badge">OUR SERVICES</span>
+      <h2>WHAT WE OFFER</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Custom Digitizing</h3>
+          <p>Get your logo or illustration converted into DST, PES, or EXP files optimized for seamless thread performance.</p>
         </div>
-        <div class="rating-text-feedback" id="rating-feedback-label">SELECT A RATING</div>
-        <form id="website-rating-form" class="rating-form">
-          <input type="hidden" id="selected-rating-value" name="rating_score" value="0">
-          <textarea name="feedback_comment" placeholder="Leave your feedback here..." rows="3"></textarea>
-          <button type="submit" class="btn btn-primary">SUBMIT RATING</button>
-        </form>
+        <div class="service-card">
+          <h3>Patches & Apparel</h3>
+          <p>High-quality embroidered patches, custom jackets, hats, and hoodies with rich textures and vivid stitching.</p>
+        </div>
+        <div class="service-card">
+          <h3>Vector Artwork</h3>
+          <p>Clean vector redrawn services ensuring crisp edges and sharp stitch mapping for high-precision output.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER SECTION -->
-<footer class="site-footer">
-  <div class="container footer-content">
-    <!-- Brand & Mission -->
-    <div class="footer-col">
-      <h3>WRIGHT'S DIGIT</h3>
-      <p>Quality providers.</p>
+  <!-- DIGITIZING ORDER FORM MODAL -->
+  <div id="digitizing-modal" class="modal">
+    <div class="modal-content form-modal">
+      <button class="close-btn" id="close-digitizing-btn">&times;</button>
+      <div class="text-center">
+        <span class="badge">CUSTOM SERVICE</span>
+        <h2>ORDER DIGITIZING</h2>
+        <p class="help-text">Fill out the details below and attach your artwork for a quick quote.</p>
+      </div>
+      <form id="digitizing-form">
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="client-name">Full Name</label>
+            <input type="text" id="client-name" required placeholder="John Doe">
+          </div>
+          <div class="form-group half-width">
+            <label for="client-email">Email Address</label>
+            <input type="email" id="client-email" required placeholder="john@example.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="design-size">Required Size (Width x Height)</label>
+          <input type="text" id="design-size" placeholder="e.g., 4x4 inches, Cap Size, Full Back">
+        </div>
+        <div class="form-group">
+          <label>Required File Formats</label>
+          <div class="format-options">
+            <label><input type="checkbox" name="format" value="DST" checked> DST</label>
+            <label><input type="checkbox" name="format" value="PES"> PES</label>
+            <label><input type="checkbox" name="format" value="EXP"> EXP</label>
+            <label><input type="checkbox" name="format" value="EMB"> EMB</label>
+            <label><input type="checkbox" name="format" value="JEF"> JEF</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="artwork-file">Upload Artwork / Logo</label>
+          <input type="file" id="artwork-file" accept="image/*,.pdf,.ai,.psd" required>
+          <span class="help-text">Accepted formats: PNG, JPG, PDF, AI, PSD</span>
+        </div>
+        <div class="form-group">
+          <label for="instructions">Special Instructions</label>
+          <textarea id="instructions" rows="3" placeholder="Specify garment placement (Hat, Left Chest, Jacket Back) or thread preferences."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary submit-btn">SUBMIT DIGITIZING REQUEST</button>
+      </form>
     </div>
-
-  <!-- Copyright Banner -->
-  <div class="footer-bottom">
-    <p>&copy; 2026 WRIGHT'S DIGIT. All rights reserved.</p>
   </div>
-</footer>
 
-<!-- ABOUT US MODAL -->
-<div id="about-modal" class="modal-overlay">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeAboutModal()">&times;</button>
-    <h2>ABOUT WRIGHT'S DIGIT</h2>
-    <div class="about-body">
-      <h3>Who We Are</h3>
-      <p>WRIGHT'S DIGIT is a digital solutions platform dedicated to providing lightweight, highly responsive, and minimalistic e-commerce and web development tools.</p>
-      
-      <h3>What We Offer</h3>
-      <p>We build tailored digital products, automation templates, and modular software designs focused on speed, efficiency, and seamless user experiences.</p>
-
-      <h3>Our Vision</h3>
-      <p>To deliver robust digital architecture with high-contrast design standards and modern client-side integrations.</p>
+  <!-- ABOUT US MODAL -->
+  <div id="about-modal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" id="close-about-btn">&times;</button>
+      <div class="text-center">
+        <span class="badge">WHO WE ARE</span>
+        <h2>ABOUT STITCHCRAFT</h2>
+      </div>
+      <div class="about-body">
+        <h3>Craftsmanship in Every Stitch</h3>
+        <p>Stitchcraft is a boutique embroidery studio and digitizing house dedicated to quality over quantity. We bridge the gap between digital art and tactile textile production.</p>
+        <h3>Precision Guaranteed</h3>
+        <p>Every digitizing file is manually digitized and stitch-tested to minimize thread breaks and puckering on all garment types.</p>
+      </div>
     </div>
   </div>
-</div>
-  
-  <!-- INLINE EMERGENCY PRELOADER UNSTICKER -->
-<script>
-  // Guarantees preloader hides even if external script.js fails
-  setTimeout(() => {
-    const preloader = document.getElementById("stitch-preloader");
-    if (preloader) {
-      preloader.classList.add("fade-out");
-      setTimeout(() => { preloader.style.display = "none"; }, 600);
-    }
-  }, 1000);
-</script>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>STITCHCRAFT</h3>
+        <p>Precision embroidery digitizing & high-quality embroidered merchandise crafted for brands, artists, and creators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>QUICK LINKS</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products Catalog</a></li>
+          <li><a href="#" id="open-about-link">About Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>NEED HELP?</h4>
+        <button id="footer-digitizing-btn" class="btn btn-outline footer-btn">Order Digitizing</button>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stitchcraft Studio. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
-  
