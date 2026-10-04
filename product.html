@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WRIGHT'S DIGIT | Products Catalog</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+
+  <!-- PRODUCT PAGE NAVBAR -->
+  <header class="products-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-link">
+        <span class="brand-logo-symbol">R</span>
+        <span class="brand-name">WRIGHT'S DIGIT</span>
+      </a>
+      <a href="index.html#contact" class="nav-contact-link">CONTACT</a>
+    </div>
+  </header>
+
+  <!-- PRODUCTS GRID -->
+  <main class="section">
+    <div class="container">
+      <h1 class="page-title">OUR PRODUCTS</h1>
+      <div id="product-grid" class="product-grid"></div>
+    </div>
+  </main>
+
+  <!-- MULTI-IMAGE & DETAIL POPUP MODAL -->
+  <div id="product-detail-modal" class="modal">
+    <div class="modal-content product-modal-content">
+      <span class="close-btn" onclick="closeModal('product-detail-modal')">&times;</span>
+      
+      <!-- Image Gallery Carousel -->
+      <div class="gallery-container">
+        <img id="modal-main-img" src="" alt="Product Image" class="gallery-main-img">
+        <div id="modal-thumbnails" class="thumbnail-list"></div>
+      </div>
+
+      <!-- Details -->
+      <div class="product-info-panel">
+        <h2 id="modal-product-title"></h2>
+        <div class="price-row">
+          <span id="modal-product-price" class="modal-price"></span>
+          <button class="btn btn-outline" id="modal-like-btn"><i data-feather="heart"></i> <span id="modal-likes-count"></span></button>
+        </div>
+        
+        <p id="modal-product-desc"></p>
+
+        <!-- Customer Reviews List -->
+        <div class="reviews-container">
+          <h3>REVIEWS</h3>
+          <div id="modal-reviews-list"></div>
+        </div>
+
+        <button class="btn btn-primary full-width" id="trigger-order-btn">ORDER NOW</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER FORM MODAL -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('order-modal')">&times;</span>
+      <h3>COMPLETE YOUR ORDER</h3>
+      <p id="order-product-subtitle" class="order-subtitle"></p>
+
+      <!-- Formspree Integration -->
+      <form id="order-form" class="order-form">
+        <input type="hidden" id="order-item-name" name="ordered_product">
+        
+        <label>FULL NAME</label>
+        <input type="text" name="customer_name" required placeholder="John Doe">
+
+        <label>EMAIL ADDRESS</label>
+        <input type="email" name="customer_email" required placeholder="john@example.com">
+
+        <label>PAYMENT METHOD</label>
+        <select name="payment_method" required>
+          <option value="">-- Select Payment Method --</option>
+          <option value="Credit/Debit Card">Credit / Debit Card</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="EasyPaisa / JazzCash">EasyPaisa / JazzCash</option>
+          <option value="PayPal">PayPal</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary full-width">CONFIRM ORDER</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
