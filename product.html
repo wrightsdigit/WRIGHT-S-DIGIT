@@ -9,6 +9,14 @@
 </head>
 <body>
 
+  <div class="order-trigger-container" style="text-align: center; margin: 40px 0; position: relative; z-index: 1000;">
+  <button type="button" 
+          onclick="document.getElementById('embroidery-modal').style.display='flex';" 
+          class="btn btn-primary btn-large">
+    PLACE EMBROIDERY DIGITIZING ORDER
+  </button>
+</div>
+  
   <!-- PRODUCT PAGE NAVBAR -->
   <header class="products-header">
     <div class="container nav-wrapper">
@@ -27,12 +35,6 @@
       <div id="product-grid" class="product-grid"></div>
     </div>
   </main>
-
-  <div class="order-trigger-container" style="text-align: center; margin: 40px 0;">
-    <button type="button" onclick="openEmbroideryModal(event)" class="btn btn-primary btn-large">
-      PLACE  EMBROIDERY DIGITIZING ORDER
-    </button>
-  </div>
 
   <!-- MULTI-IMAGE & DETAIL POPUP MODAL -->
   <div id="product-detail-modal" class="modal">
