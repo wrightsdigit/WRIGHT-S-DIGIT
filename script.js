@@ -279,6 +279,7 @@ window.addEventListener("click", function(event) {
 });
 
 // FORMSPREE AJAX SUBMISSION & SUCCESS MESSAGE HANDLER
+// FORMSPREE AJAX SUBMISSION & TIMEOUT HANDLER
 document.addEventListener("DOMContentLoaded", function() {
   const orderForm = document.getElementById("embroidery-order-form");
   const statusDiv = document.getElementById("form-status");
@@ -286,56 +287,66 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (orderForm) {
     orderForm.addEventListener("submit", function(e) {
-      e.preventDefault(); // Prevents page reload / redirection
+      e.preventDefault();
 
       const formData = new FormData(orderForm);
       
-      // Update button text while uploading
       submitBtn.disabled = true;
       submitBtn.innerText = "SUBMITTING...";
       statusDiv.style.color = "#000000";
-      statusDiv.innerText = "Processing your order...";
+      statusDiv.innerText = "Uploading artwork & submitting details...";
+
+      // Set a 15-second safety timeout so the button never stays stuck
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
 
       fetch(orderForm.action, {
         method: "POST",
         body: formData,
         headers: {
           'Accept': 'application/json'
-        }
-      }).then(response => {
+        },
+        signal: controller.signal
+      })
+      .then(async (response) => {
+        clearTimeout(timeoutId);
+        const data = await response.json();
+
         if (response.ok) {
-          // Success Response
           statusDiv.style.color = "#2e7d32";
           statusDiv.innerText = "✓ Submitted Successfully! We will review your order and email you shortly.";
           orderForm.reset();
           
-          // Auto close modal after 3.5 seconds
           setTimeout(() => {
             closeEmbroideryModal();
             statusDiv.innerText = "";
             submitBtn.disabled = false;
             submitBtn.innerText = "SUBMIT ORDER";
           }, 3500);
-
         } else {
-          // Error Handling
-          response.json().then(data => {
-            if (Object.hasOwn(data, 'errors')) {
-              statusDiv.style.color = "#d32f2f";
-              statusDiv.innerText = data["errors"].map(error => error["message"]).join(", ");
-            } else {
-              statusDiv.style.color = "#d32f2f";
-              statusDiv.innerText = "Oops! There was a problem submitting your order.";
-            }
-          });
+          // Display exact error returned by Formspree
           submitBtn.disabled = false;
           submitBtn.innerText = "SUBMIT ORDER";
+          statusDiv.style.color = "#d32f2f";
+
+          if (data && data.errors) {
+            statusDiv.innerText = "Formspree Error: " + data.errors.map(err => err.message).join(", ");
+          } else {
+            statusDiv.innerText = "Submission failed (Status " + response.status + "). Please check your Formspree settings.";
+          }
         }
-      }).catch(error => {
-        statusDiv.style.color = "#d32f2f";
-        statusDiv.innerText = "Oops! There was a network error. Please try again.";
+      })
+      .catch(error => {
+        clearTimeout(timeoutId);
         submitBtn.disabled = false;
         submitBtn.innerText = "SUBMIT ORDER";
+        statusDiv.style.color = "#d32f2f";
+
+        if (error.name === 'AbortError') {
+          statusDiv.innerText = "Connection timed out. File might be too large or internet is slow.";
+        } else {
+          statusDiv.innerText = "Network Error: Unable to reach Formspree. Ensure your Formspree ID is correct.";
+        }
       });
     });
   }
