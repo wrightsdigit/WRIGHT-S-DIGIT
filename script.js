@@ -1,4 +1,4 @@
-// FORMSPREE ENDPOINT FOR ORDERS
+// FORMSPREE ENDPOINT FOR STANDARD ORDERS
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xzedpygv";
 
 // PRODUCT CATALOG WITH MULTI-IMAGE GALLERIES
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ORDER FORM SUBMIT
+  // STANDARD ORDER FORM SUBMIT
   const orderForm = document.getElementById("order-form");
   if (orderForm) {
     orderForm.addEventListener("submit", async function(e) {
@@ -278,8 +278,7 @@ window.addEventListener("click", function(event) {
   }
 });
 
-// FORMSPREE AJAX SUBMISSION & SUCCESS MESSAGE HANDLER
-// FORMSPREE AJAX SUBMISSION & TIMEOUT HANDLER
+// WEB3FORMS AJAX SUBMISSION & TIMEOUT HANDLER FOR EMBROIDERY ORDERS
 document.addEventListener("DOMContentLoaded", function() {
   const orderForm = document.getElementById("embroidery-order-form");
   const statusDiv = document.getElementById("form-status");
@@ -296,23 +295,20 @@ document.addEventListener("DOMContentLoaded", function() {
       statusDiv.style.color = "#000000";
       statusDiv.innerText = "Uploading artwork & submitting details...";
 
-      // Set a 15-second safety timeout so the button never stays stuck
+      // Set a 20-second safety timeout for file upload handling
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      const timeoutId = setTimeout(() => controller.abort(), 20000);
 
       fetch(orderForm.action, {
         method: "POST",
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        },
         signal: controller.signal
       })
       .then(async (response) => {
         clearTimeout(timeoutId);
         const data = await response.json();
 
-        if (response.ok) {
+        if (data.success) {
           statusDiv.style.color = "#2e7d32";
           statusDiv.innerText = "✓ Submitted Successfully! We will review your order and email you shortly.";
           orderForm.reset();
@@ -324,16 +320,11 @@ document.addEventListener("DOMContentLoaded", function() {
             submitBtn.innerText = "SUBMIT ORDER";
           }, 3500);
         } else {
-          // Display exact error returned by Formspree
+          // Display error returned by Web3Forms
           submitBtn.disabled = false;
           submitBtn.innerText = "SUBMIT ORDER";
           statusDiv.style.color = "#d32f2f";
-
-          if (data && data.errors) {
-            statusDiv.innerText = "Formspree Error: " + data.errors.map(err => err.message).join(", ");
-          } else {
-            statusDiv.innerText = "Submission failed (Status " + response.status + "). Please check your Formspree settings.";
-          }
+          statusDiv.innerText = data.message || "Submission failed. Please check your Access Key.";
         }
       })
       .catch(error => {
@@ -343,9 +334,9 @@ document.addEventListener("DOMContentLoaded", function() {
         statusDiv.style.color = "#d32f2f";
 
         if (error.name === 'AbortError') {
-          statusDiv.innerText = "Connection timed out. File might be too large or internet is slow.";
+          statusDiv.innerText = "Connection timed out. File might be too large or internet connection is slow.";
         } else {
-          statusDiv.innerText = "Network Error: Unable to reach Formspree. Ensure your Formspree ID is correct.";
+          statusDiv.innerText = "Network Error: Unable to submit. Please check your internet connection.";
         }
       });
     });
