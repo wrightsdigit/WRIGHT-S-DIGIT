@@ -344,3 +344,30 @@ a {
   color: #000000;
   transform: scale(1.2);
 }
+
+/* BRAND CONTAINER & LOGO ALIGNMENT */
+.brand-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Spacing between logo and title */
+  margin-bottom: 10px;
+}
+
+.brand-logo {
+  height: 50px; /* Adjust height to match your desired title size */
+  width: auto;  /* Maintains aspect ratio */
+  object-fit: contain;
+}
+
+/* Ensure mobile layout stays clean */
+@media (max-width: 600px) {
+  .brand-container {
+    flex-direction: column; /* Stacks logo above title on small screens */
+    gap: 8px;
+  }
+
+  .brand-logo {
+    height: 40px;
+  }
+}
