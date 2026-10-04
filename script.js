@@ -55,18 +55,20 @@ function hideAuthModal() {
   const authModal = document.getElementById("auth-modal");
   if (authModal) {
     authModal.style.display = "none";
+    authModal.style.visibility = "hidden";
   }
 }
 
-// Function triggered if "CONTINUE TO SITE" button is clicked
 function continueToSite() {
+  if (!localStorage.getItem("userEmail")) {
+    localStorage.setItem("userEmail", "guest@wrightsdigit.com");
+  }
   hideAuthModal();
 }
 
 function checkAuthStatus() {
   const user = localStorage.getItem("userEmail");
   if (user) {
-    // User is already logged in, hide modal immediately on page load
     hideAuthModal();
   }
 }
