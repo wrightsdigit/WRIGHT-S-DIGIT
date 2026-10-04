@@ -3,188 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WRIGHT'S DIGIT | Embroidery services</title>
+  <title>WRIGHT'S DIGIT | Minimalist Solutions</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Defer loading of icon script so the browser never hangs -->
+  <!-- Google Sign-In Library -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
 
-  <!-- RELIABLE STITCH PRELOADER -->
+  <!-- STITCH PRELOADER -->
 <div id="stitch-preloader">
   <div class="stitch-box">
-    <!-- Moving Needle Graphic -->
-    <div class="needle-wrapper">
-      <div class="needle-body"></div>
-      <div class="thread-tail"></div>
-    </div>
-    
-    <!-- Stitched Line -->
+    <div class="needle-wrapper"><div class="needle-body"></div></div>
     <div class="stitch-line"></div>
-
-    <!-- Company Title -->
     <h1 class="stitch-title">WRIGHT'S DIGIT</h1>
   </div>
 </div>
-  
-  <!-- HEADER / NAVBAR -->
-  <header class="header">
-    <div class="nav-container">
-      <a href="#" class="brand">
-        <!-- REPLACE 'logo.png' WITH YOUR ACTUAL LOGO IMAGE PATH -->
-        <img src="logo.png" alt="WRIGHT'S DIGIT Logo" class="brand-logo" id="logo-img">
-        <span class="brand-name">WRIGHT'S DIGIT</span>
-      </a>
 
-      <nav class="nav-links">
-        <a href="#products">Products</a>
-        <a href="#about">About Us</a>
-        <a href="#help">Help</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <!-- 2. MANDATORY GOOGLE SIGN-IN / SIGN-UP MODAL -->
+  <div id="auth-modal" class="auth-overlay">
+    <div class="auth-box">
+      <h2>WELCOME TO WRIGHT'S DIGIT</h2>
+      <p>Please sign in or create an account to access our platform.</p>
+      
+      <!-- Google Sign-In Button Container -->
+      <div id="g_id_onload"
+           data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+           data-callback="handleGoogleSignIn"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
+      
+      <div id="user-profile-display" class="user-profile hidden">
+        <p>Logged in as: <strong id="user-email-text"></strong></p>
+        <button onclick="continueToSite()" class="btn btn-primary">CONTINUE TO SITE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. HERO & BRAND HEADER -->
+  <header class="hero-header">
+    <div class="container text-center">
+      <h1 class="brand-title">WRIGHT'S DIGIT</h1>
+      <p class="brand-slogan">PRECISION & MINIMALISM IN EVERY DIGITAL STITCH</p>
     </div>
   </header>
 
-  <main>
-    <!-- HERO SECTION -->
-    <section class="hero">
-      <div class="container">
-        <h1>Embroidery that shines</h1>
-        <p>We offer quality.</p>
-      </div>
-    </section>
-
-    <!-- PRODUCTS GRID SECTION -->
-    <section id="products" class="products-section">
-      <div class="container">
-        <h2 class="section-title">OUR PRODUCTS</h2>
-        <div class="product-grid" id="product-grid">
-          <!-- Products will be injected by JS or added manually below -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT US SECTION -->
-    <section id="about" class="about-section">
-      <div class="container">
-        <h2 class="section-title">ABOUT WRIGHT'S DIGIT</h2>
-        <p class="about-text">
-          At WRIGHT'S DIGIT, we eliminate distraction to deliver supreme digital execution. We specialize in Embroidery Digitizing: Flawless PES and DST files that run smoothly on your machines without thread breaks.
-
-Vector Art Conversion: Crisp, scalable EPS, AI, and CDR files perfect for high-resolution printing.
-
-We know how busy your shop gets, which is why we offer a blazing-fast 3 to 4-hour turnaround time to keep your production moving.
-
-        </p>
-      </div>
-    </section>
-
-    <!-- HELP / FAQ SECTION -->
-    <section id="help" class="help-section">
-      <div class="container">
-        <h2 class="section-title">HELP & FREQUENTLY ASKED QUESTIONS</h2>
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-question">How are orders processed? <i data-feather="chevron-down"></i></button>
-            <div class="faq-answer">
-              <p>Once you place an order with your Gmail address, our system instantly triggers a purchase confirmation and sends product access directly to your inbox.</p>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-question">What payment methods do you accept? <i data-feather="chevron-down"></i></button>
-            <div class="faq-answer">
-              <p>We process all major credit/debit cards, direct bank wire transfers, and verified digital wallets after order receipt.</p>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-question">Need technical support? <i data-feather="chevron-down"></i></button>
-            <div class="faq-answer">
-              <p>Reach out through our direct contact email below and our response team will assist within 12 business hours.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-   <!-- CONTACT SECTION -->
-<section id="contact" class="contact-section">
-  <div class="container">
-    <h2 class="section-title">CONTACT US</h2>
-    <div class="contact-card">
-      <!-- Direct SVG Mailbox Icon -->
-      <div class="mailbox-icon-container">
-        <svg class="mailbox-icon" viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-          <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-      </div>
-      <p class="contact-subtitle">HAVE QUESTIONS OR NEED CUSTOM SOLUTIONS?</p>
-      <!-- Direct Email Link -->
-      <a href="mailto:wrightsdigit@gmail.com" class="email-address">wrightsdigit@gmail.com</a>
+  <!-- 4. WHAT WE DO SECTION -->
+  <section class="section what-we-do">
+    <div class="container text-center">
+      <span class="badge">WHAT WE DO</span>
+      <h2>CRAFTED DIGITAL EXCELLENCE</h2>
+      <p class="section-desc">
+        At Wright's Digit, we specialize in high-contrast, minimalist digital tools, custom automation scripts, and streamlined user interfaces tailored to elevate modern digital operations.
+      </p>
+      <a href="products.html" class="btn btn-primary btn-large">EXPLORE PRODUCTS &rarr;</a>
     </div>
-  </div>
-</section>
+  </section>
 
-  <!-- WEBSITE & PRODUCT RATING SECTION -->
-<section id="feedback" class="rating-section">
-  <div class="container">
-    <div class="rating-card">
-      <span class="badge">YOUR FEEDBACK</span>
-      <h2>RATE YOUR EXPERIENCE WITH WRIGHT'S DIGIT</h2>
-      <p>How would you rate our products and overall website experience?</p>
-
-      <!-- Animated Star Picker -->
-      <div class="star-rating-box" id="site-star-picker">
-        <span class="star-btn" data-value="1">&#9733;</span>
-        <span class="star-btn" data-value="2">&#9733;</span>
-        <span class="star-btn" data-value="3">&#9733;</span>
-        <span class="star-btn" data-value="4">&#9733;</span>
-        <span class="star-btn" data-value="5">&#9733;</span>
-      </div>
-
-      <div class="rating-text-feedback" id="rating-feedback-label">SELECT A RATING</div>
-
-      <!-- Optional Comment & Submit -->
-      <form id="website-rating-form" class="rating-form">
-        <input type="hidden" id="selected-rating-value" name="rating_score" value="0">
-        <textarea id="rating-comment" name="feedback_comment" placeholder="Tell us what you liked or how we can improve..." rows="3"></textarea>
-        <button type="submit" id="submit-rating-btn" class="btn btn-primary">SUBMIT RATING</button>
-      </form>
+  <!-- 5. ABOUT US SECTION -->
+  <section class="section about-section">
+    <div class="container text-center">
+      <span class="badge">ABOUT US</span>
+      <h2>OUR PHILOSOPHY</h2>
+      <p class="section-desc">
+        We eliminate clutter to focus purely on performance, functionality, and aesthetic minimalism. Every project is engineered with mathematical precision.
+      </p>
     </div>
-  </div>
-</section>
-  
-  <!-- FOOTER -->
-  <footer class="footer">
+  </section>
+
+  <!-- 6. CONTACT SECTION -->
+  <section id="contact" class="section contact-section">
+    <div class="container text-center">
+      <h2 class="section-title">CONTACT US</h2>
+      <div class="contact-card">
+        <div class="mailbox-icon-container">
+          <svg class="mailbox-icon" viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </div>
+        <p class="contact-subtitle">HAVE QUESTIONS OR NEED CUSTOM SOLUTIONS?</p>
+        <a href="mailto:wrightsdigit@gmail.com" class="email-address">wrightsdigit@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. WEBSITE RATING SECTION -->
+  <section id="feedback" class="section rating-section">
     <div class="container">
-      <p>&copy; 2026 WRIGHT'S DIGIT. ALL RIGHTS RESERVED.</p>
+      <div class="rating-card">
+        <span class="badge">FEEDBACK</span>
+        <h2>RATE YOUR EXPERIENCE</h2>
+        <div class="star-rating-box" id="site-star-picker">
+          <span class="star-btn" data-value="1">&#9733;</span>
+          <span class="star-btn" data-value="2">&#9733;</span>
+          <span class="star-btn" data-value="3">&#9733;</span>
+          <span class="star-btn" data-value="4">&#9733;</span>
+          <span class="star-btn" data-value="5">&#9733;</span>
+        </div>
+        <div class="rating-text-feedback" id="rating-feedback-label">SELECT A RATING</div>
+        <form id="website-rating-form" class="rating-form">
+          <input type="hidden" id="selected-rating-value" name="rating_score" value="0">
+          <textarea name="feedback_comment" placeholder="Leave your feedback here..." rows="3"></textarea>
+          <button type="submit" class="btn btn-primary">SUBMIT RATING</button>
+        </form>
+      </div>
     </div>
-  </footer>
+  </section>
 
-  <!-- REVIEWS MODAL -->
-  <div id="reviews-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="close-reviews">&times;</span>
-      <h3 id="reviews-title">PRODUCT REVIEWS</h3>
-      <div id="reviews-list" class="reviews-list"></div>
-    </div>
-  </div>
-
-  <!-- ORDER MODAL -->
-  <div id="order-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="close-order">&times;</span>
-      <h3>PLACE YOUR ORDER</h3>
-      <p id="order-product-name" class="modal-subtitle"></p>
-      <form id="order-form">
-        <input type="hidden" id="selected-product-id">
-        <label for="user-email">ENTER YOUR GMAIL ADDRESS</label>
-        <!-- REPLACE THE MAILTO ADDRESS IN APP.JS OR INLINE -->
-        <input type="email" id="user-email" placeholder="example@gmail.com" required>
-        <button type="submit" class="btn btn-primary full-width">SUBMIT ORDER</button>
-      </form>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <!-- INLINE EMERGENCY PRELOADER UNSTICKER -->
+<script>
+  // Guarantees preloader hides even if external script.js fails
+  setTimeout(() => {
+    const preloader = document.getElementById("stitch-preloader");
+    if (preloader) {
+      preloader.classList.add("fade-out");
+      setTimeout(() => { preloader.style.display = "none"; }, 600);
+    }
+  }, 1000);
+</script>
 </body>
 </html>
+
+  
