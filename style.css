@@ -559,3 +559,93 @@ a {
   line-height: 1.5;
   color: #333333;
 }
+
+/* =========================================================
+   EMBROIDERY DIGITIZING ORDER FORM STYLES
+   ========================================================= */
+.form-modal {
+  max-width: 600px;
+  width: 92%;
+  padding: 25px;
+  border-radius: 4px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #000000;
+  font-family: inherit;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.format-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 8px 0;
+}
+
+.format-options label {
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px dashed #000000;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.help-text {
+  display: block;
+  font-size: 0.75rem;
+  color: #666666;
+  margin-top: 4px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
