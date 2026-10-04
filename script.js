@@ -146,8 +146,12 @@ function closeModal(id) {
   if (modal) modal.style.display = "none";
 }
 
-// EMBROIDERY ORDER MODAL CONTROLLERS (TRIGGERED BY THE MAIN TOP BUTTON)
-function openEmbroideryModal() {
+// FIXED EMBROIDERY ORDER MODAL CONTROLLERS
+function openEmbroideryModal(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation(); // Stops event from instantly triggering global window.onclick
+  }
   const modal = document.getElementById("embroidery-modal");
   if (modal) {
     modal.style.display = "flex";
@@ -172,7 +176,7 @@ function closeAboutModal() {
   if (modal) modal.style.display = "none";
 }
 
-// GLOBAL OUTSIDE-CLICK DISMISS FOR MODALS
+// FIXED GLOBAL OUTSIDE-CLICK DISMISS
 window.addEventListener("click", function(event) {
   const modals = [
     "about-modal",
@@ -181,8 +185,10 @@ window.addEventListener("click", function(event) {
     "order-modal",
     "auth-modal"
   ];
+  
   modals.forEach(id => {
     const m = document.getElementById(id);
+    // Only close if the user clicks directly on the dark outer background overlay
     if (m && event.target === m) {
       m.style.display = "none";
     }
@@ -274,7 +280,6 @@ Please attach your artwork/logo file (PNG, JPG, PDF, SVG, AI, PSD, CDR, etc.) to
         embroideryStatusDiv.innerText = "Opening your email app... Please attach your artwork file and hit Send!";
       }
 
-      // Trigger the default email client (Gmail, Outlook, Mail app, etc.)
       window.location.href = mailtoLink;
 
       setTimeout(() => {
