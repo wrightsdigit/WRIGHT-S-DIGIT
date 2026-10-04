@@ -231,3 +231,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// ABOUT US MODAL HANDLERS
+function openAboutModal() {
+  const modal = document.getElementById("about-modal");
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
+
+function closeAboutModal() {
+  const modal = document.getElementById("about-modal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+// Close About Modal if user clicks outside content box
+window.addEventListener("click", function(event) {
+  const modal = document.getElementById("about-modal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+});
