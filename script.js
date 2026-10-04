@@ -32,16 +32,13 @@ let activeProduct = null;
 // GOOGLE AUTHENTICATION HANDLERS
 function handleGoogleSignIn(response) {
   try {
-    // Decode JWT Payload
     const base64Url = response.credential.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const payload = JSON.parse(window.atob(base64));
     
-    // Store user data in browser
     localStorage.setItem("userEmail", payload.email);
     localStorage.setItem("userName", payload.name);
 
-    // Immediately hide the auth overlay
     hideAuthModal();
   } catch (e) {
     console.error("Auth decode error:", e);
@@ -70,10 +67,10 @@ function checkAuthStatus() {
   }
 }
 
-// SAFE PRODUCT GRID RENDERING (ONLY RUNS ON PRODUCTS PAGE)
+// SAFE PRODUCT GRID RENDERING (Pure catalog view - No order buttons)
 function renderProductGrid() {
   const grid = document.getElementById("product-grid");
-  if (!grid) return; // Exit cleanly if on landing page
+  if (!grid) return;
   
   grid.innerHTML = "";
   products.forEach(p => {
@@ -94,7 +91,7 @@ function renderProductGrid() {
   });
 }
 
-// PRODUCT DETAIL MODAL
+// PRODUCT DETAIL POPUP MODAL
 function openProductDetail(id) {
   activeProduct = products.find(p => p.id === id);
   if (!activeProduct) return;
@@ -144,35 +141,59 @@ function openProductDetail(id) {
   if (window.feather) feather.replace();
 }
 
-function openOrderModal(product) {
-  const subtitle = document.getElementById("order-product-subtitle");
-  const nameInput = document.getElementById("order-item-name");
-  
-  if (subtitle) subtitle.innerText = `Ordering: ${product.name} (${product.price})`;
-  if (nameInput) nameInput.value = product.name;
-  
-  const savedEmail = localStorage.getItem("userEmail");
-  if (savedEmail) {
-    const emailInput = document.querySelector("#order-form input[name='customer_email']");
-    if (emailInput) emailInput.value = savedEmail;
-  }
-
-  const orderModal = document.getElementById("order-modal");
-  if (orderModal) orderModal.style.display = "flex";
-}
-
 function closeModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.style.display = "none";
 }
 
-// DOM INITIALIZATION FOR PRODUCT ORDERS (DIRECT MAILTO)
+// EMBROIDERY ORDER MODAL CONTROLLERS (TRIGGERED BY THE MAIN TOP BUTTON)
+function openEmbroideryModal() {
+  const modal = document.getElementById("embroidery-modal");
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
+
+function closeEmbroideryModal() {
+  const modal = document.getElementById("embroidery-modal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+// ABOUT US MODAL HANDLERS
+function openAboutModal() {
+  const modal = document.getElementById("about-modal");
+  if (modal) modal.style.display = "flex";
+}
+
+function closeAboutModal() {
+  const modal = document.getElementById("about-modal");
+  if (modal) modal.style.display = "none";
+}
+
+// GLOBAL OUTSIDE-CLICK DISMISS FOR MODALS
+window.addEventListener("click", function(event) {
+  const modals = [
+    "about-modal",
+    "embroidery-modal",
+    "product-detail-modal",
+    "order-modal",
+    "auth-modal"
+  ];
+  modals.forEach(id => {
+    const m = document.getElementById(id);
+    if (m && event.target === m) {
+      m.style.display = "none";
+    }
+  });
+});
+
+// INITIALIZE SYSTEM & FORM HANDLERS
 document.addEventListener("DOMContentLoaded", () => {
   if (window.feather) feather.replace();
   
-  // Check if user is already signed in on page load
   checkAuthStatus();
-  
   renderProductGrid();
 
   // STANDALONE RATING STAR PICKER
@@ -197,117 +218,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // STANDARD PRODUCT ORDER FORM SUBMIT (DIRECT GMAIL HANDLER)
-  const orderForm = document.getElementById("order-form");
-  const orderStatusDiv = document.getElementById("product-order-status");
+  // MAIN FREE EMBROIDERY DIGITIZING FORM SUBMISSION (MAILTO GENERATOR)
+  const embroideryForm = document.getElementById("embroidery-order-form");
+  const embroideryStatusDiv = document.getElementById("form-status");
 
-  if (orderForm) {
-    orderForm.addEventListener("submit", function(e) {
+  if (embroideryForm) {
+    embroideryForm.addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const customerName = document.querySelector("#order-form input[name='customer_name']").value;
-      const customerEmail = document.querySelector("#order-form input[name='customer_email']").value;
-      const paymentMethod = document.querySelector("#order-form select[name='payment_method']").value;
-      const notes = document.querySelector("#order-form textarea[name='notes']")?.value || "None provided";
-      const productName = activeProduct ? activeProduct.name : "Digital Product";
-      const productPrice = activeProduct ? activeProduct.price : "N/A";
-
-      const recipientEmail = "wrightsdigit@gmail.com";
-      const subject = encodeURIComponent(`New Product Order Request: ${productName}`);
-      
-      const bodyText = `Hello Wright's Digit,
-
-I would like to place an order for the following item:
-
---------------------------------------------------
-ORDER DETAILS
---------------------------------------------------
-Product: ${productName}
-Price: ${productPrice}
-Payment Method: ${paymentMethod}
-
-CUSTOMER INFORMATION
-Name: ${customerName}
-Email: ${customerEmail}
-
-NOTES / INSTRUCTIONS:
-${notes}
-
---------------------------------------------------
-NOTE TO CUSTOMER: Please attach any reference files if needed before clicking send!
---------------------------------------------------`;
-
-      const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
-
-      if (orderStatusDiv) {
-        orderStatusDiv.style.color = "#2e7d32";
-        orderStatusDiv.innerText = "Opening your email app... Please review and click Send!";
-      }
-
-      window.location.href = mailtoLink;
-
-      setTimeout(() => {
-        closeModal("order-modal");
-        orderForm.reset();
-        if (orderStatusDiv) orderStatusDiv.innerText = "";
-      }, 3500);
-    });
-  }
-});
-
-// ABOUT US MODAL HANDLERS
-function openAboutModal() {
-  const modal = document.getElementById("about-modal");
-  if (modal) {
-    modal.style.display = "flex";
-  }
-}
-
-function closeAboutModal() {
-  const modal = document.getElementById("about-modal");
-  if (modal) {
-    modal.style.display = "none";
-  }
-}
-
-// EMBROIDERY ORDER MODAL HANDLERS
-function openEmbroideryModal() {
-  const modal = document.getElementById("embroidery-modal");
-  if (modal) {
-    modal.style.display = "flex";
-  }
-}
-
-function closeEmbroideryModal() {
-  const modal = document.getElementById("embroidery-modal");
-  if (modal) {
-    modal.style.display = "none";
-  }
-}
-
-// GLOBAL OUTSIDE-CLICK HANDLER FOR MODALS
-window.addEventListener("click", function(event) {
-  const aboutModal = document.getElementById("about-modal");
-  const embroideryModal = document.getElementById("embroidery-modal");
-  
-  if (event.target === aboutModal) {
-    aboutModal.style.display = "none";
-  }
-  if (event.target === embroideryModal) {
-    embroideryModal.style.display = "none";
-  }
-});
-
-// EMBROIDERY ORDER FORM SUBMISSION (DIRECT GMAIL / MAILTO HANDLER)
-document.addEventListener("DOMContentLoaded", function() {
-  const orderForm = document.getElementById("embroidery-order-form");
-  const statusDiv = document.getElementById("form-status");
-
-  if (orderForm) {
-    orderForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      // Gather form fields
+      // Collect customer form details
       const name = document.getElementById("cust-name").value;
       const email = document.getElementById("cust-email").value;
       const phone = document.getElementById("cust-phone").value;
@@ -350,17 +269,18 @@ Please attach your artwork/logo file (PNG, JPG, PDF, SVG, AI, PSD, CDR, etc.) to
 
       const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
 
-      if (statusDiv) {
-        statusDiv.style.color = "#2e7d32";
-        statusDiv.innerText = "Opening your email app... Please attach your artwork file and hit Send!";
+      if (embroideryStatusDiv) {
+        embroideryStatusDiv.style.color = "#2e7d32";
+        embroideryStatusDiv.innerText = "Opening your email app... Please attach your artwork file and hit Send!";
       }
 
+      // Trigger the default email client (Gmail, Outlook, Mail app, etc.)
       window.location.href = mailtoLink;
 
       setTimeout(() => {
         closeEmbroideryModal();
-        orderForm.reset();
-        if (statusDiv) statusDiv.innerText = "";
+        embroideryForm.reset();
+        if (embroideryStatusDiv) embroideryStatusDiv.innerText = "";
       }, 4000);
     });
   }
