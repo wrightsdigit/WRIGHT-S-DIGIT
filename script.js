@@ -277,3 +277,66 @@ window.addEventListener("click", function(event) {
     modal.style.display = "none";
   }
 });
+
+// FORMSPREE AJAX SUBMISSION & SUCCESS MESSAGE HANDLER
+document.addEventListener("DOMContentLoaded", function() {
+  const orderForm = document.getElementById("embroidery-order-form");
+  const statusDiv = document.getElementById("form-status");
+  const submitBtn = document.getElementById("submit-order-btn");
+
+  if (orderForm) {
+    orderForm.addEventListener("submit", function(e) {
+      e.preventDefault(); // Prevents page reload / redirection
+
+      const formData = new FormData(orderForm);
+      
+      // Update button text while uploading
+      submitBtn.disabled = true;
+      submitBtn.innerText = "SUBMITTING...";
+      statusDiv.style.color = "#000000";
+      statusDiv.innerText = "Processing your order...";
+
+      fetch(orderForm.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          // Success Response
+          statusDiv.style.color = "#2e7d32";
+          statusDiv.innerText = "✓ Submitted Successfully! We will review your order and email you shortly.";
+          orderForm.reset();
+          
+          // Auto close modal after 3.5 seconds
+          setTimeout(() => {
+            closeEmbroideryModal();
+            statusDiv.innerText = "";
+            submitBtn.disabled = false;
+            submitBtn.innerText = "SUBMIT ORDER";
+          }, 3500);
+
+        } else {
+          // Error Handling
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              statusDiv.style.color = "#d32f2f";
+              statusDiv.innerText = data["errors"].map(error => error["message"]).join(", ");
+            } else {
+              statusDiv.style.color = "#d32f2f";
+              statusDiv.innerText = "Oops! There was a problem submitting your order.";
+            }
+          });
+          submitBtn.disabled = false;
+          submitBtn.innerText = "SUBMIT ORDER";
+        }
+      }).catch(error => {
+        statusDiv.style.color = "#d32f2f";
+        statusDiv.innerText = "Oops! There was a network error. Please try again.";
+        submitBtn.disabled = false;
+        submitBtn.innerText = "SUBMIT ORDER";
+      });
+    });
+  }
+});
