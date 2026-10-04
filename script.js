@@ -1,5 +1,5 @@
 // FORMSPREE ENDPOINT FOR ORDERS
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwlveobj";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xzedpygv";
 
 // PRODUCT CATALOG WITH MULTI-IMAGE GALLERIES
 const products = [
