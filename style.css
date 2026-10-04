@@ -185,7 +185,7 @@ a {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.85);
   z-index: 9999;
-  display: flex;
+  display: flex; /* Script will override this to 'none' */
   justify-content: center;
   align-items: center;
 }
