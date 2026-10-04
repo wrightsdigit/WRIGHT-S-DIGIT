@@ -21,23 +21,27 @@
   </div>
 </div>
 
-  <!-- 2. MANDATORY GOOGLE SIGN-IN / SIGN-UP MODAL -->
-  <div id="auth-modal" class="auth-overlay">
+  <!-- MANDATORY GOOGLE SIGN-IN / SIGN-UP MODAL -->
+<div id="auth-modal" class="auth-overlay">
   <div class="auth-box">
-    <span class="close-btn" onclick="hideAuthModal()">&times;</span>
     <h2>WELCOME TO WRIGHT'S DIGIT</h2>
     <p>Please sign in or create an account to access our platform.</p>
     
     <!-- Google Sign-In Container -->
-    <div id="g_id_onload"
-         data-client_id="1081639446824-k3fvjf6gb475pg7ojs4avdnp47267hbs.apps.googleusercontent.com"
-         data-callback="handleGoogleSignIn"
-         data-auto_prompt="false">
+    <div style="display: flex; justify-content: center; margin: 20px 0;">
+      <div id="g_id_onload"
+           data-client_id="1081639446824-k3fvjf6gb475pg7ojs4avdnp47267hbs.apps.googleusercontent.com"
+           data-callback="handleGoogleSignIn"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
     </div>
-    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
+
+    <div style="margin-top: 15px;">
+      <button onclick="continueToSite()" class="btn btn-outline full-width">CONTINUE TO SITE &rarr;</button>
+    </div>
   </div>
 </div>
-  </div>
 
   <!-- 3. HERO & BRAND HEADER -->
   <header class="hero-header">
