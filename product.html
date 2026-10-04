@@ -22,7 +22,7 @@
 
   <div class="order-trigger-container" style="text-align: center; margin: 40px 0;">
     <button type="button" onclick="openEmbroideryModal()" class="btn btn-primary btn-large">
-      PLACE FREE EMBROIDERY DIGITIZING ORDER
+      PLACE  EMBROIDERY DIGITIZING ORDER
     </button>
   </div>
 
@@ -63,53 +63,11 @@
     </div>
   </div>
 
-  <!-- STANDARD PRODUCT ORDER FORM MODAL (DIRECT GMAIL) -->
-  <div id="order-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('order-modal')">&times;</span>
-      <h3>COMPLETE YOUR ORDER</h3>
-      <p id="order-product-subtitle" class="order-subtitle"></p>
-
-      <form id="order-form" class="order-form">
-        <input type="hidden" id="order-item-name" name="ordered_product">
-        
-        <div class="form-group">
-          <label for="order-customer-name">FULL NAME *</label>
-          <input type="text" id="order-customer-name" name="customer_name" required placeholder="John Doe">
-        </div>
-
-        <div class="form-group">
-          <label for="order-customer-email">EMAIL ADDRESS *</label>
-          <input type="email" id="order-customer-email" name="customer_email" required placeholder="john@example.com">
-        </div>
-
-        <div class="form-group">
-          <label for="order-payment-method">PREFERRED PAYMENT METHOD *</label>
-          <select id="order-payment-method" name="payment_method" required>
-            <option value="">-- Select Payment Method --</option>
-            <option value="Credit/Debit Card">Credit / Debit Card</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-            <option value="EasyPaisa / JazzCash">EasyPaisa / JazzCash</option>
-            <option value="PayPal">PayPal</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="order-notes">ADDITIONAL NOTES / SPECIFICATIONS</label>
-          <textarea id="order-notes" name="notes" rows="3" placeholder="Specify quantity, color choices, or special requests..."></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary full-width">OPEN EMAIL TO COMPLETE ORDER</button>
-        <div id="product-order-status" style="margin-top: 15px; text-align: center; font-weight: bold; font-size: 0.95rem;"></div>
-      </form>
-    </div>
-  </div>
-
   <!-- EMBROIDERY DIGITIZING ORDER FORM MODAL (DIRECT GMAIL) -->
   <div id="embroidery-modal" class="modal" style="display: none;">
     <div class="modal-content">
       <span class="close-btn" onclick="closeEmbroideryModal()">&times;</span>
-      <h3>FREE EMBROIDERY DIGITIZING ORDER</h3>
+      <h3>PLACE EMBROIDERY DIGITIZING ORDER</h3>
 
       <form id="embroidery-order-form">
         <!-- Customer Info -->
