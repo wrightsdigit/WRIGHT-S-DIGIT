@@ -223,7 +223,7 @@ a {
 }
 
 .nav-logo {
-  height: 38px; /* Adjusted height for standard navbar */
+  height: 80px; /* Adjusted height for standard navbar */
   width: auto;
   object-fit: contain;
   display: block;
@@ -409,7 +409,7 @@ a {
 }
 
 .brand-logo {
-  height: 50px; /* Adjust height to match your desired title size */
+  height: 100px; /* Adjust height to match your desired title size */
   width: auto;  /* Maintains aspect ratio */
   object-fit: contain;
 }
