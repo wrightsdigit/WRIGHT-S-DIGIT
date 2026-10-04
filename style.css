@@ -425,3 +425,137 @@ a {
     height: 40px;
   }
 }
+
+/* =========================================================
+   FOOTER & ABOUT US MODAL STYLES
+   ========================================================= */
+.site-footer {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 40px 0 0 0;
+  margin-top: 60px;
+  border-top: 2px solid #000000;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  padding-bottom: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.footer-col h3 {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.footer-col h4 {
+  font-size: 1rem;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: #cccccc;
+}
+
+.footer-col p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #bbbbbb;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-btn {
+  margin-top: 10px;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+}
+
+.footer-btn:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid #333333;
+  text-align: center;
+  padding: 15px 0;
+  background-color: #050505;
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: #888888;
+  margin: 0;
+}
+
+/* ABOUT US MODAL STYLES */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 30px;
+  width: 90%;
+  max-width: 550px;
+  border: 2px solid #000000;
+  position: relative;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.about-body h3 {
+  margin-top: 18px;
+  font-size: 1rem;
+}
+
+.about-body p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #333333;
+}
