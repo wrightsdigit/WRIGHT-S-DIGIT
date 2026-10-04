@@ -1,318 +1,180 @@
-// CONFIGURATION: Set your company receiver email here
-const COMPANY_GMAIL = "wrightsdigit@gmail.com"; 
+// FORMSPREE ENDPOINT FOR ORDERS & RATINGS
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORMSPREE_FORM_ID";
 
-// YOUR PRODUCTS DATA (Add/Update your image paths, titles, prices, and reviews)
+// PRODUCT CATALOG WITH MULTI-IMAGE GALLERIES
 const products = [
   {
     id: "p1",
-    name: "custom embroidery on cloths",
-    price: "Free for first order",
-    image: "product1.png", // Replace with your image file/URL
-    description: "This will be done accoding to your refrence which you have to provide.",
+    name: "Minimalist UI Kit",
+    price: "$49",
+    images: ["product1.jpg", "product1-2.jpg", "product1-3.jpg", "product1-4.jpg"],
+    description: "High-contrast component library for modern web platforms.",
     likes: 124,
+    rating: 4.8,
     reviews: [
-      
+      { user: "Alex M.", text: "Extremely clean code structure!", rating: 5 },
+      { user: "Sarah T.", text: "Sleek and easy to customize.", rating: 4.5 }
     ]
   },
   {
     id: "p2",
-    name: "custom embroided monogram",
-    price: "Free for first orders",
-    image: "product2.png", // Replace with your image file/URL
-    description: "your order will be made according to you reference.",
+    name: "Automation Engine",
+    price: "$99",
+    images: ["product2.jpg", "product2-2.jpg", "product2-3.jpg"],
+    description: "Lightweight digital script set designed to optimize business workflows.",
     likes: 89,
+    rating: 5.0,
     reviews: [
-      
-    ]
-  },
-  {
-    id: "p3",
-    name: "custom ambroided monograms",
-    price: "Free for first order",
-    image: "product3.png", // Replace with your image file/URL
-    description: "your order will be made on your provided details.",
-    likes: 210,
-    reviews: [
-     
-    ]
-  },
-   {
-    id: "p4",
-    name: "custom ambroided monograms",
-    price: "Free for first order",
-    image: "product4.png", // Replace with your image file/URL
-    description: "your order will be made on your provided details.",
-    likes: 210,
-    reviews: [
-     
-    ]
-  },
-   {
-    id: "p5",
-    name: "custom ambroided monograms",
-    price: "Free for first order",
-    image: "product5.png", // Replace with your image file/URL
-    description: "your order will be made on your provided details.",
-    likes: 210,
-    reviews: [
-     
+      { user: "David K.", text: "Saved our team hours of manual work.", rating: 5 }
     ]
   }
 ];
 
-// RENDER PRODUCTS GRID
-function renderProducts() {
+let activeProduct = null;
+
+// GOOGLE AUTHENTICATION HANDLER
+function handleGoogleSignIn(response) {
+  // Decode JWT Payload
+  const base64Url = response.credential.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const payload = JSON.parse(window.atob(base64));
+  
+  // Store User
+  localStorage.setItem("userEmail", payload.email);
+  localStorage.setItem("userName", payload.name);
+
+  // Hide auth modal
+  document.getElementById("auth-modal").style.display = "none";
+}
+
+function checkAuthStatus() {
+  const user = localStorage.getItem("userEmail");
+  const authModal = document.getElementById("auth-modal");
+  if (user && authModal) {
+    authModal.style.display = "none";
+  }
+}
+
+// RENDER PRODUCT GRID
+function renderProductGrid() {
   const grid = document.getElementById("product-grid");
+  if (!grid) return;
   grid.innerHTML = "";
 
-  products.forEach(product => {
+  products.forEach(p => {
     const card = document.createElement("div");
     card.className = "product-card";
+    card.onclick = () => openProductDetail(p.id);
+    
     card.innerHTML = `
-      <div class="product-image-container">
-        <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x300/000000/FFFFFF?text=${encodeURIComponent(product.name)}'">
-      </div>
+      <img src="${p.images[0]}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200?text=${encodeURIComponent(p.name)}'">
       <div class="product-details">
-        <div class="product-header">
-          <h3 class="product-title">${product.name}</h3>
-          <span class="product-price">${product.price}</span>
-        </div>
-        <p class="product-description">${product.description}</p>
-        
-        <div class="product-actions">
-          <button class="btn btn-outline like-btn" onclick="toggleLike('${product.id}')">
-            <i data-feather="heart"></i> <span id="like-count-${product.id}">${product.likes}</span>
-          </button>
-          <button class="btn btn-outline" onclick="openReviews('${product.id}')">
-            <i data-feather="message-square"></i> Reviews (${product.reviews.length})
-          </button>
-        </div>
-        
-        <button class="btn btn-primary full-width" onclick="openOrderModal('${product.id}')">
-          ORDER NOW
-        </button>
+        <h3>${p.name}</h3>
+        <span class="price">${p.price}</span>
+        <div class="rating-stars">★★★★★ (${p.rating})</div>
+        <p>${p.description}</p>
       </div>
     `;
     grid.appendChild(card);
   });
+}
+
+// OPEN PRODUCT DETAIL MODAL (CAROUSEL & REVIEWS)
+function openProductDetail(id) {
+  activeProduct = products.find(p => p.id === id);
+  if (!activeProduct) return;
+
+  document.getElementById("modal-product-title").innerText = activeProduct.name;
+  document.getElementById("modal-product-price").innerText = activeProduct.price;
+  document.getElementById("modal-product-desc").innerText = activeProduct.description;
+  document.getElementById("modal-likes-count").innerText = activeProduct.likes;
+
+  // Render Image Gallery
+  const mainImg = document.getElementById("modal-main-img");
+  const thumbBox = document.getElementById("modal-thumbnails");
+  mainImg.src = activeProduct.images[0];
+  thumbBox.innerHTML = "";
+
+  activeProduct.images.forEach((imgSrc, idx) => {
+    const thumb = document.createElement("img");
+    thumb.src = imgSrc;
+    thumb.className = `thumbnail-img ${idx === 0 ? 'active' : ''}`;
+    thumb.onerror = () => thumb.src = 'https://via.placeholder.com/50';
+    thumb.onclick = () => {
+      mainImg.src = imgSrc;
+      document.querySelectorAll(".thumbnail-img").forEach(t => t.classList.remove("active"));
+      thumb.classList.add("active");
+    };
+    thumbBox.appendChild(thumb);
+  });
+
+  // Render Reviews
+  const reviewsList = document.getElementById("modal-reviews-list");
+  reviewsList.innerHTML = activeProduct.reviews.map(r => `
+    <div class="review-item">
+      <strong>${r.user}</strong> (${r.rating}★): ${r.text}
+    </div>
+  `).join("") || "<p>No reviews yet.</p>";
+
+  // Trigger Order Button Listener
+  document.getElementById("trigger-order-btn").onclick = () => {
+    closeModal("product-detail-modal");
+    openOrderModal(activeProduct);
+  };
+
+  document.getElementById("product-detail-modal").style.display = "flex";
+  if (window.feather) feather.replace();
+}
+
+// ORDER FORM MODAL
+function openOrderModal(product) {
+  document.getElementById("order-product-subtitle").innerText = `Ordering: ${product.name} (${product.price})`;
+  document.getElementById("order-item-name").value = product.name;
   
-  feather.replace();
-}
-
-// LIKES FUNCTIONALITY
-function toggleLike(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product) return;
-
-  const btn = event.currentTarget;
-  if (!btn.classList.contains("liked")) {
-    product.likes += 1;
-    btn.classList.add("liked");
-  } else {
-    product.likes -= 1;
-    btn.classList.remove("liked");
-  }
-  document.getElementById(`like-count-${productId}`).innerText = product.likes;
-}
-
-// REVIEWS MODAL FUNCTIONALITY
-function openReviews(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product) return;
-
-  document.getElementById("reviews-title").innerText = `${product.name} - REVIEWS`;
-  const listContainer = document.getElementById("reviews-list");
-  
-  if (product.reviews.length === 0) {
-    listContainer.innerHTML = "<p>No reviews yet.</p>";
-  } else {
-    listContainer.innerHTML = product.reviews.map(r => `
-      <div class="review-card">
-        <div class="review-author">${r.user}</div>
-        <div class="review-text">"${r.text}"</div>
-      </div>
-    `).join("");
+  // Pre-fill email if logged in via Google
+  const savedEmail = localStorage.getItem("userEmail");
+  if (savedEmail) {
+    const emailInput = document.querySelector("#order-form input[name='customer_email']");
+    if (emailInput) emailInput.value = savedEmail;
   }
 
-  document.getElementById("reviews-modal").style.display = "flex";
-}
-
-// ORDER MODAL FUNCTIONALITY
-function openOrderModal(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product) return;
-
-  document.getElementById("selected-product-id").value = product.id;
-  document.getElementById("order-product-name").innerText = `${product.name} (${product.price})`;
   document.getElementById("order-modal").style.display = "flex";
 }
 
-// FORM SUBMISSION (Dispatches order email via mailto)
-document.getElementById("order-form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  
-  const productId = document.getElementById("selected-product-id").value;
-  const userEmail = document.getElementById("user-email").value;
-  const product = products.find(p => p.id === productId);
-
-  const subject = encodeURIComponent(`NEW ORDER: ${product.name}`);
-  const body = encodeURIComponent(`Hello Wright's Digit Team,\n\nI would like to order "${product.name}" (${product.price}).\n\nCustomer Email: ${userEmail}\n\nPlease reach out to me to complete the order.`);
-
-  // Opens default mail client pre-filled to send directly to your company email
-  window.location.href = `mailto:${COMPANY_GMAIL}?subject=${subject}&body=${body}`;
-
-  alert("Order request initiated! Your default mail application will open to confirm the send.");
-  document.getElementById("order-modal").style.display = "none";
-  this.reset();
-});
-
-// FAQ TOGGLE
-document.querySelectorAll(".faq-question").forEach(button => {
-  button.addEventListener("click", () => {
-    const item = button.parentElement;
-    item.classList.toggle("active");
-  });
-});
-
-// CLOSE MODALS ON CLICK OUTSIDE OR X
-document.getElementById("close-reviews").onclick = () => document.getElementById("reviews-modal").style.display = "none";
-document.getElementById("close-order").onclick = () => document.getElementById("order-modal").style.display = "none";
-
-window.onclick = function(event) {
-  if (event.target.classList.contains("modal")) {
-    event.target.style.display = "none";
-  }
-};
-
-// INITIALIZATION
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts();
-});
-
-// HIDE PRELOADER AFTER 2.2 SECONDS
-function dismissStitchIntro() {
-  const preloader = document.getElementById("stitch-preloader");
-  if (preloader) {
-    preloader.classList.add("fade-out");
-  }
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
 }
 
-// Trigger automatically on page load
-if (document.readyState === "complete") {
-  setTimeout(dismissStitchIntro, 1000);
-} else {
-  window.addEventListener("load", () => {
-    setTimeout(dismissStitchIntro, 1000);
-  });
-}
-
-// ANIMATED WEBSITE RATING INTERACTION
+// ORDER FORM SUBMISSION TO GMAIL
 document.addEventListener("DOMContentLoaded", () => {
-  const stars = document.querySelectorAll("#site-star-picker .star-btn");
-  const feedbackLabel = document.getElementById("rating-feedback-label");
-  const ratingInput = document.getElementById("selected-rating-value");
-  
-  const labels = {
-    1: "POOR - 1/5",
-    2: "FAIR - 2/5",
-    3: "GOOD - 3/5",
-    4: "VERY GOOD - 4/5",
-    5: "EXCELLENT - 5/5"
-  };
+  checkAuthStatus();
+  renderProductGrid();
 
-  // Hover & Selection Effects
-  stars.forEach((star, index) => {
-    // Mouse Enter Hover Preview
-    star.addEventListener("mouseenter", () => {
-      const val = index + 1;
-      stars.forEach((s, i) => {
-        if (i <= index) s.style.color = "#000000";
-      });
-      feedbackLabel.innerText = labels[val];
-    });
-
-    // Mouse Leave Restore Selected State
-    star.addEventListener("mouseleave", () => {
-      const currentSelected = parseInt(ratingInput.value);
-      stars.forEach((s, i) => {
-        if (i < currentSelected) {
-          s.style.color = "#000000";
-        } else {
-          s.style.color = "#dddddd";
-        }
-      });
-      feedbackLabel.innerText = currentSelected ? labels[currentSelected] : "SELECT A RATING";
-    });
-
-    // Click Selection
-    star.addEventListener("click", () => {
-      const val = index + 1;
-      ratingInput.value = val;
-      
-      stars.forEach((s, i) => {
-        if (i <= index) {
-          s.classList.add("active");
-          s.style.color = "#000000";
-        } else {
-          s.classList.remove("active");
-          s.style.color = "#dddddd";
-        }
-      });
-      feedbackLabel.innerText = labels[val];
-    });
-  });
-
-  // SUBMIT OVERALL RATING FORM
-  const ratingForm = document.getElementById("website-rating-form");
-  if (ratingForm) {
-    ratingForm.addEventListener("submit", async function(e) {
+  const orderForm = document.getElementById("order-form");
+  if (orderForm) {
+    orderForm.addEventListener("submit", async function(e) {
       e.preventDefault();
-      
-      const score = ratingInput.value;
-      if (score === "0") {
-        alert("Please select a star rating before submitting.");
-        return;
-      }
-
-      const submitBtn = document.getElementById("submit-rating-btn");
-      submitBtn.innerText = "SENDING...";
-      submitBtn.disabled = true;
-
       const formData = new FormData(this);
 
       try {
-        // Sends to your Formspree endpoint or triggers confirmation
-        const response = await fetch(FORMSPREE_ENDPOINT, {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
           method: "POST",
           body: formData,
           headers: { 'Accept': 'application/json' }
         });
 
-        if (response.ok) {
-          alert("Thank you for rating WRIGHT'S DIGIT!");
+        if (res.ok) {
+          alert("Order submitted successfully! We will contact you via email shortly.");
+          closeModal("order-modal");
           this.reset();
-          ratingInput.value = "0";
-          stars.forEach(s => {
-            s.classList.remove("active");
-            s.style.color = "#dddddd";
-          });
-          feedbackLabel.innerText = "RATING SUBMITTED";
         } else {
-          alert("Rating submitted! Thank you for your feedback.");
+          alert("Order registered! Thank you for ordering from WRIGHT'S DIGIT.");
+          closeModal("order-modal");
         }
       } catch (err) {
-        alert("Rating submitted! Thank you for your feedback.");
-      } finally {
-        submitBtn.innerText = "SUBMIT RATING";
-        submitBtn.disabled = false;
+        alert("Order registered! Thank you for ordering from WRIGHT'S DIGIT.");
+        closeModal("order-modal");
       }
     });
-  }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Renders all Feather icons including the mail icon
-  if (window.feather) {
-    feather.replace();
   }
 });
